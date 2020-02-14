@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Sport.Models
 {
@@ -12,6 +13,6 @@ namespace Sport.Models
         public string Nimi { get; set; }
         public int Tulemused { get; set; }
 
-        public ICollection<Registreering> Enrollments { get; set; }
+        public ICollection<Registreering> Registreeringud { get; set; }
     }
 }

@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Sport.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Sport.Data
 {
-    public class SpordiContext : DBContext
+    public class SpordiContext : DbContext
     {
         public SpordiContext(DbContextOptions<SpordiContext> options) : base(options)
         {
