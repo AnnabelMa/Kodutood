@@ -16,7 +16,7 @@ namespace Sport
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static void Main(string[] args) //MIKS ON TOPELT ENTRY programmi??
         {
             var host = CreateWebHostBuilder(args).Build();
 
