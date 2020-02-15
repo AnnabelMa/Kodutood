@@ -38,7 +38,6 @@ namespace Sport.Controllers
             {
                 return NotFound();
             }
-
             return View(sportlane);
         }
 
@@ -53,14 +52,23 @@ namespace Sport.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Perekonnanimi,Eesnimi,RegistreeringuKP")] Sportlane sportlane)
+        public async Task<IActionResult> Create(
+            [Bind("RegistreeringuKP, Eesnimi, Perekonnanimi")] Sportlane sportlane)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(sportlane);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(sportlane);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
+            catch (DbUpdateException /* ex */)
+            {
+                //Log the error (uncomment ex variable name and write a log.
+                ModelState.AddModelError("", "Ei saa muudatusi salvestada. " +
+                    "Proovige uuesti! Kui midagi ei muutu, võtke ühendust süsteemi administraatoriga!.");            }
             return View(sportlane);
         }
 
