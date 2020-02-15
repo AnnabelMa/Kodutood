@@ -20,9 +20,28 @@ namespace Sport.Controllers
         }
 
         // GET: Sportlased
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            return View(await _context.Sportlased.ToListAsync());
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date-desc" : "Date";
+            var sportlased = from s in _context.Sportlased select s;
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    sportlased = sportlased.OrderByDescending(s => s.Perekonnanimi);
+                    break;
+                case "Date":
+                    sportlased = sportlased.OrderBy(s => s.RegistreeringuKP);
+                    break;
+                case "date_desc":
+                    sportlased = sportlased.OrderByDescending(s => s.RegistreeringuKP);
+                    break;
+                default:
+                    sportlased = sportlased.OrderBy(s => s.Perekonnanimi);
+                    break;
+            }
+            return View(await sportlased.AsNoTracking().ToListAsync());
         }
 
         // GET: Sportlased/Details/5
