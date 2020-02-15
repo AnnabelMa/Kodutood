@@ -32,7 +32,6 @@ namespace Sport.Controllers
             {
                 return NotFound();
             }
-
             var sportlane = await _context.Sportlased
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (sportlane == null)
@@ -73,7 +72,14 @@ namespace Sport.Controllers
                 return NotFound();
             }
 
-            var sportlane = await _context.Sportlased.FindAsync(id);
+            var sportlane = await _context.Sportlased
+                //include ja thenInclude meetodid aitavad laadida
+                //Sportlane.Registreeringud nav property
+                .Include(s => s.Registreeringud)
+                .ThenInclude(e => e.Spordiala)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.ID == id);
+
             if (sportlane == null)
             {
                 return NotFound();
