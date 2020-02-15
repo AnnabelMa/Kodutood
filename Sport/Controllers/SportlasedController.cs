@@ -19,13 +19,30 @@ namespace Sport.Controllers
             _context = context;
         }
 
+
         // GET: Sportlased
-        public async Task<IActionResult> Index(string sortOrder)
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
+            ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["DateSortParm"] = sortOrder == "Date" ? "date-desc" : "Date";
-            var sportlased = from s in _context.Sportlased select s;
 
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var sportlased = from s in _context.Sportlased select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                sportlased = sportlased.Where(s => s.Perekonnanimi.Contains(searchString) || s.Eesnimi.Contains(searchString));
+            }
             switch (sortOrder)
             {
                 case "name_desc":
@@ -41,7 +58,8 @@ namespace Sport.Controllers
                     sportlased = sportlased.OrderBy(s => s.Perekonnanimi);
                     break;
             }
-            return View(await sportlased.AsNoTracking().ToListAsync());
+            int pageSize = 3;
+            return View(await PaginatedList<Sportlane>.CreateAsync(sportlased.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Sportlased/Details/5

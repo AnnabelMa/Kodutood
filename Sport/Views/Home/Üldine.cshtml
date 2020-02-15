@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Sport.Models.SpordiViewModels.RegistreeringuKPGroup>
+
+@{
+    ViewData["Nimi"] = "Sportlase tulemused, statistika";
+}
+
+<h2>Sportlase tulemused, statistika</h2>
+
+<table>
+    <tr>
+        <th>
+            Registreeringu kuupäev
+        </th>
+        <th>
+            Sportlased
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RegistreeringuKP)
+            </td>
+            <td>
+                @item.SportlaneCount
+            </td>
+        </tr>
+    }
+</table>
