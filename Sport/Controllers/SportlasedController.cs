@@ -33,6 +33,9 @@ namespace Sport.Controllers
                 return NotFound();
             }
             var sportlane = await _context.Sportlased
+                .Include(s => s.Registreeringud)
+                .ThenInclude(e => e.Spordiala)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (sportlane == null)
             {
@@ -98,40 +101,34 @@ namespace Sport.Controllers
         // POST: Sportlased/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Perekonnanimi,Eesnimi,RegistreeringuKP")] Sportlane sportlane)
+        public async Task<IActionResult> EditPost(int? id)
         {
-            if (id != sportlane.ID)
+            if (id == null)
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            var sportlaneToUpdate = await _context.Sportlased.FirstOrDefaultAsync(s => s.ID == id);
+            if (await TryUpdateModelAsync<Sportlane>(sportlaneToUpdate, "", 
+                s => s.Eesnimi, s => s.Perekonnanimi, sportlaneToUpdate => sportlaneToUpdate.RegistreeringuKP))
             {
                 try
                 {
-                    _context.Update(sportlane);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateException /* ex */)
                 {
-                    if (!SportlaneExists(sportlane.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    //Log the error (uncomment ex variable name and write a log.)
+                    ModelState.AddModelError("", "Ei saa muudatusi salvestada. " +
+                    "Proovige uuesti! Kui midagi ei muutu, võtke ühendust süsteemi administraatoriga!.");
                 }
-                return RedirectToAction(nameof(Index));
             }
-            return View(sportlane);
+            return View(sportlaneToUpdate);
         }
-
         // GET: Sportlased/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
         {
             if (id == null)
             {
@@ -139,12 +136,18 @@ namespace Sport.Controllers
             }
 
             var sportlane = await _context.Sportlased
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (sportlane == null)
             {
                 return NotFound();
             }
-
+            if (saveChangesError.GetValueOrDefault())
+            {
+                ViewData["ErrorMessage"] =
+                    "Kustutamine ei õnnestunud."  +
+                    "Proovige uuesti! Kui midagi ei muutu, võtke ühendust süsteemi administraatoriga!.";
+            }
             return View(sportlane);
         }
 
@@ -154,9 +157,21 @@ namespace Sport.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var sportlane = await _context.Sportlased.FindAsync(id);
-            _context.Sportlased.Remove(sportlane);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            if (sportlane == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            try
+            {
+                _context.Sportlased.Remove(sportlane);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateException /* ex */)
+            {
+                return RedirectToAction(nameof(Delete), new { id = id, saveChangesError = true });
+            }
+           
         }
 
         private bool SportlaneExists(int id)
