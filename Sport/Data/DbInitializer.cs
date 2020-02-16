@@ -65,7 +65,7 @@ namespace Sport.Data
             }
             context.SaveChanges();
 
-            var osakonds = new Osakond[]
+            var osakonnad = new Osakond[]
             {
                 new Osakond { Nimi = "Motosport",     Eelarve = 350000,
                     AlgusKP = DateTime.Parse("2007-09-01"),
@@ -81,7 +81,7 @@ namespace Sport.Data
                     TreenerID  = treenerid.Single( i => i.Perekonnanimi == "Kapoor").ID }
             };
 
-            foreach (Osakond d in osakonds)
+            foreach (Osakond d in osakonnad)
             {
                 context.Osakonnad.Add(d);
             }
@@ -90,25 +90,25 @@ namespace Sport.Data
             var spordialad = new Spordiala[]
             {
                 new Spordiala {SpordialaID = 1050, Nimi = "Kergejõustik",
-                    OsakondID = osakonds.Single( s => s.Nimi == "Suvesport").OsakondID
+                    OsakondID = osakonnad.Single( s => s.Nimi == "Suvesport").OsakondID
                 },
                 new Spordiala {SpordialaID = 4022, Nimi = "Suusatamine",
-                    OsakondID = osakonds.Single( s => s.Nimi == "Talisport").OsakondID
+                    OsakondID = osakonnad.Single( s => s.Nimi == "Talisport").OsakondID
                 },
                 new Spordiala {SpordialaID = 4041, Nimi = "Autoralli",
-                    OsakondID = osakonds.Single( s => s.Nimi == "Motosport").OsakondID
+                    OsakondID = osakonnad.Single( s => s.Nimi == "Motosport").OsakondID
                 },
                 new Spordiala {SpordialaID = 1045, Nimi = "Uisutamine",
-                    OsakondID = osakonds.Single( s => s.Nimi == "Talisport").OsakondID
+                    OsakondID = osakonnad.Single( s => s.Nimi == "Talisport").OsakondID
                 },
                 new Spordiala {SpordialaID = 3141, Nimi = "Vettehüpped",
-                    OsakondID = osakonds.Single( s => s.Nimi == "Veesport").OsakondID
+                    OsakondID = osakonnad.Single( s => s.Nimi == "Veesport").OsakondID
                 },
                 new Spordiala {SpordialaID = 2021, Nimi = "Laskesuusatamine",
-                    OsakondID = osakonds.Single( s => s.Nimi == "Talisport").OsakondID
+                    OsakondID = osakonnad.Single( s => s.Nimi == "Talisport").OsakondID
                 },
                 new Spordiala {SpordialaID = 2042, Nimi = "Purjetamine",
-                    OsakondID = osakonds.Single( s => s.Nimi == "Suvesport").OsakondID
+                    OsakondID = osakonnad.Single( s => s.Nimi == "Suvesport").OsakondID
                 },
             };
 

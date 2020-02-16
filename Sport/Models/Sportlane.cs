@@ -14,7 +14,7 @@ namespace Sport.Models
         public string Perekonnanimi { get; set; }
         [StringLength(50)]
         [Column("Eesnimi")]
-        [Display(Name = "EEsnimi")]
+        [Display(Name = "Eesnimi")]
         public string Eesnimi { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]

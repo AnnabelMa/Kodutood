@@ -20,7 +20,7 @@ namespace Sport.Models
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Alhuse KPe")]
+        [Display(Name = "Algus KP")]
         public DateTime AlgusKP { get; set; }
 
         public int? TreenerID { get; set; }

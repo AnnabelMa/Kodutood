@@ -54,7 +54,7 @@ namespace Sport.Views
                 {
                     await _context.Entry(registreering).Reference(x => x.Sportlane).LoadAsync();
                 }
-                viewModel.Registreerings = selectedCourse.Registreeringud;
+                viewModel.Registreeringud = selectedCourse.Registreeringud;
             }
 
             return View(viewModel);

@@ -42,7 +42,7 @@ namespace Sport.Migrations
                     RegistreeringID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SpordialaID = table.Column<int>(nullable: false),
-                    SportlaseID = table.Column<int>(nullable: false),
+                   // SportlaseID = table.Column<int>(nullable: false), misseeon
                     SportlaneID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
