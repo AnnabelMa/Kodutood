@@ -110,6 +110,8 @@ namespace Sport.Views
 
             var treener = await _context.Treenerid
                 .Include(i => i.AsutuseAssignment)
+                .Include(i => i.SpordialaAssignments)
+                .ThenInclude(i => i.Spordiala)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
 
@@ -117,13 +119,30 @@ namespace Sport.Views
             {
                 return NotFound();
             }
+            PopulateAssignedSpordialaData(treener);
             return View(treener);
+        }
+        private void PopulateAssignedSpordialaData(Treener treener)
+        {
+            var allSpordialad = _context.Spordiala;
+            var treenerSpordialad = new HashSet<int>(treener.SpordialaAssignments.Select(c => c.SpordialaID));
+            var viewModel = new List<AssignedSpordialaData>();
+            foreach (var spordiala in allSpordialad)
+            {
+                viewModel.Add(new AssignedSpordialaData
+                {
+                    SpordialaID = spordiala.SpordialaID,
+                    Nimi = spordiala.Nimi,
+                    Assigned = treenerSpordialad.Contains(spordiala.SpordialaID)
+                });
+            }
+            ViewData["Courses"] = viewModel;
         }
 
         // POST: Treenerid/Edit/5
-        [HttpPost, ActionName("Edit")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditPost(int? id)
+        public async Task<IActionResult> Edit(int? id, string[] selectedSpordialad)
         {
             if (id == 0)
             {
@@ -131,8 +150,10 @@ namespace Sport.Views
             }
 
             var treenerToUpdate = await _context.Treenerid
-        .Include(i => i.AsutuseAssignment)
-        .FirstOrDefaultAsync(s => s.ID == id);
+                .Include(i => i.AsutuseAssignment)
+                .Include (i => i.SpordialaAssignments)
+                .ThenInclude(i => i.Spordiala)
+                .FirstOrDefaultAsync(s => s.ID == id);
 
             if (await TryUpdateModelAsync<Treener>(
                 treenerToUpdate,
@@ -143,6 +164,7 @@ namespace Sport.Views
                 {
                     treenerToUpdate.AsutuseAssignment = null;
                 }
+                UpdateTreenerSpordialad(selectedSpordialad, treenerToUpdate);
                 try
                 {
                     await _context.SaveChangesAsync();
@@ -156,7 +178,40 @@ namespace Sport.Views
                 }
                 return RedirectToAction(nameof(Index));
             }
+            UpdateTreenerSpordialad(selectedSpordialad, treenerToUpdate);
+            PopulateAssignedSpordialaData(treenerToUpdate);
             return View(treenerToUpdate);
+        }
+        private void UpdateTreenerSpordialad(string[] selectedSpordiala, Treener treenerToUpdate)
+        {
+            if (selectedSpordiala == null)
+            {
+                treenerToUpdate.SpordialaAssignments = new List<SpordialaAssignment>();
+                return;
+            }
+
+            var selectedSpordialaHS = new HashSet<string>(selectedSpordiala);
+            var treenerSpordiala = new HashSet<int>
+                (treenerToUpdate.SpordialaAssignments.Select(c => c.Spordiala.SpordialaID));
+            foreach (var spordiala in _context.Spordiala)
+            {
+                if (selectedSpordialaHS.Contains(spordiala.SpordialaID.ToString()))
+                {
+                    if (!treenerSpordiala.Contains(spordiala.SpordialaID))
+                    {
+                        treenerToUpdate.SpordialaAssignments.Add(new SpordialaAssignment { TreenerID = treenerToUpdate.ID, SpordialaID = spordiala.SpordialaID });
+                    }
+                }
+                else
+                {
+
+                    if (treenerSpordiala.Contains(spordiala.SpordialaID))
+                    {
+                        SpordialaAssignment spordialaToRemove = treenerToUpdate.SpordialaAssignments.FirstOrDefault(i => i.SpordialaID == spordiala.SpordialaID);
+                        _context.Remove(spordialaToRemove);
+                    }
+                }
+            }
         }
 
         // GET: Treenerid/Delete/5
