@@ -22,7 +22,7 @@
                 Palkamise KP
             </th>
             <th>
-                 Asutused
+                Asutused
             </th>
             <th>
                 Spordialad
@@ -38,38 +38,94 @@
             {
                 selectedRow = "success";
             }
-        <tr class="@selectedRow">
+            <tr class="@selectedRow">
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Perekonnanimi)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Eesnimi)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PalkamiseKP)
-            </td>
-            <td>
-                @if (item.AsutuseAssignment != null)
-                {
-                    @item.AsutuseAssignment.Location
-                }
-            </td>
-            <td>
-                @{
-                    foreach (var spordiala in item.SpordialaAssignments)
+                <td>
+                    @Html.DisplayFor(modelItem => item.Perekonnanimi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Eesnimi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PalkamiseKP)
+                </td>
+                <td>
+                    @if (item.AsutuseAssignment != null)
                     {
-                        @spordiala.Spordiala.SpordialaID @:  @spordiala.Spordiala.Nimi <br />
+                        @item.AsutuseAssignment.Location
                     }
-                }
-            </td>
-            <td>
-                <a asp-action="Index" asp-route-id="@item.ID">Select</a> |
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-            }
-        </tbody>
+                </td>
+                <td>
+                    @{
+                        foreach (var spordiala in item.SpordialaAssignments)
+                        {
+                            @spordiala.Spordiala.SpordialaID @:  @spordiala.Spordiala.Nimi <br />
+                        }
+                    }
+                </td>
+                <td>
+                    <a asp-action="Index" asp-route-id="@item.ID">Select</a> |
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
+@if (Model.Spordialas != null)
+{
+    <h3>Spordialad, mida valitud treener juhendab:</h3>
+    <table class="table">
+        <tr>
+            <th></th>
+            <th>Number</th>
+            <th>Nimi</th>
+            <th>Osakond</th>
+        </tr>
+
+        @foreach (var item in Model.Spordialas)
+        {
+            string selectedRow = "";
+            if (item.SpordialaID == (int?)ViewData["SpordialaID"])
+            {
+                selectedRow = "success";
+            }
+            <tr class="@selectedRow">
+                <td>
+                    @Html.ActionLink("Select", "Index", new { spordialaID = item.SpordialaID })
+                </td>
+                <td>
+                    @item.SpordialaID
+                </td>
+                <td>
+                    @item.Nimi
+                </td>
+                <td>
+                    @item.Osakond.Nimi
+                </td>
+            </tr>
+        }
+
+    </table>
+    @if (Model.Registreerings != null)
+    {
+        <h3>
+            Sportlased, kes on registreerunud spordialale:
+        </h3>
+        <table class="table">
+            <tr>
+                <th>Name</th>
+                <th>Grade</th>
+            </tr>
+            @foreach (var item in Model.Registreerings)
+            {
+                <tr>
+                    <td>
+                        @item.Sportlane.Täisnimi
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+}

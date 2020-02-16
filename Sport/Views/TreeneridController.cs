@@ -21,7 +21,7 @@ namespace Sport.Views
         }
 
         // GET: Treenerid
-        public async Task<IActionResult> Index(int? id, int? SpordialaID)
+        public async Task<IActionResult> Index(int? id, int? spordialaID)
         {
             var viewModel = new TreenerIndexData();
             viewModel.Treeners = await _context.Treeners
@@ -45,11 +45,16 @@ namespace Sport.Views
                 viewModel.Spordialas = treener.SpordialaAssignments.Select(s => s.Spordiala);
             }
 
-            if (SpordialaID != null)
+            if (spordialaID != null)
             {
-                ViewData["SpordialaID"] = SpordialaID.Value;
-                viewModel.Registreerings = viewModel.Spordialas.Where(
-                    x => x.SpordialaID == SpordialaID).Single().Registreeringud;
+                ViewData["SpordialaID"] = spordialaID.Value;
+                var selectedCourse = viewModel.Spordialas.Where(x => x.SpordialaID == spordialaID).Single();
+                await _context.Entry(selectedCourse).Collection(x => x.Registreeringud).LoadAsync();
+                foreach (Registreering registreering in selectedCourse.Registreeringud)
+                {
+                    await _context.Entry(registreering).Reference(x => x.Sportlane).LoadAsync();
+                }
+                viewModel.Registreerings = selectedCourse.Registreeringud;
             }
 
             return View(viewModel);
