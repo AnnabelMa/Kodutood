@@ -14,6 +14,10 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="SpordialaID" />
             <div class="form-group">
+                <label asp-for="SpordialaID" class="control-label"></label>
+                <div>@Html.DisplayFor(model => model.SpordialaID)</div>
+            </div>
+            <div class="form-group">
                 <label asp-for="Nimi" class="control-label"></label>
                 <input asp-for="Nimi" class="form-control" />
                 <span asp-validation-for="Nimi" class="text-danger"></span>
@@ -24,8 +28,8 @@
                 <span asp-validation-for="Tulemused" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="OsakondID" class="control-label"></label>
-                <select asp-for="OsakondID" class="form-control" asp-items="ViewBag.OsakondID"></select>
+                <label asp-for="Osakond" class="control-label"></label>
+                <select asp-for="Osakond" class="form-control" asp-items="ViewBag.OsakondID"></select>
                 <span asp-validation-for="OsakondID" class="text-danger"></span>
             </div>
             <div class="form-group">

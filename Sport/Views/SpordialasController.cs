@@ -38,6 +38,7 @@ namespace Sport.Views
 
             var spordiala = await _context.Spordiala
                 .Include(s => s.Osakond)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.SpordialaID == id);
             if (spordiala == null)
             {
@@ -143,6 +144,7 @@ namespace Sport.Views
 
             var spordiala = await _context.Spordiala
                 .Include(s => s.Osakond)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.SpordialaID == id);
             if (spordiala == null)
             {
