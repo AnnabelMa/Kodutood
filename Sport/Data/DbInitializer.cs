@@ -61,7 +61,7 @@ namespace Sport.Data
 
             foreach (Treener i in treenerid)
             {
-                context.Treeners.Add(i);
+                context.Treenerid.Add(i);
             }
             context.SaveChanges();
 

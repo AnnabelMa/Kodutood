@@ -24,7 +24,7 @@ namespace Sport.Views
         public async Task<IActionResult> Index(int? id, int? spordialaID)
         {
             var viewModel = new TreenerIndexData();
-            viewModel.Treeners = await _context.Treeners
+            viewModel.Treenerid = await _context.Treenerid
                   .Include(i => i.AsutuseAssignment)
                   .Include(i => i.SpordialaAssignments)
                     .ThenInclude(i => i.Spordiala)
@@ -40,7 +40,7 @@ namespace Sport.Views
             if (id != null)
             {
                 ViewData["TreenerID"] = id.Value;
-                Treener treener = viewModel.Treeners.Where(
+                Treener treener = viewModel.Treenerid.Where(
                     i => i.ID == id.Value).Single();
                 viewModel.Spordialas = treener.SpordialaAssignments.Select(s => s.Spordiala);
             }
@@ -68,7 +68,7 @@ namespace Sport.Views
                 return NotFound();
             }
 
-            var treener = await _context.Treeners
+            var treener = await _context.Treenerid
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (treener == null)
             {
@@ -108,7 +108,11 @@ namespace Sport.Views
                 return NotFound();
             }
 
-            var treener = await _context.Treeners.FindAsync(id);
+            var treener = await _context.Treenerid
+                .Include(i => i.AsutuseAssignment)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.ID == id);
+
             if (treener == null)
             {
                 return NotFound();
@@ -117,38 +121,42 @@ namespace Sport.Views
         }
 
         // POST: Treenerid/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Perekonnanimi,Eesnimi,PalkamiseKP")] Treener treener)
+        public async Task<IActionResult> EditPost(int? id)
         {
-            if (id != treener.ID)
+            if (id == 0)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            var treenerToUpdate = await _context.Treenerid
+        .Include(i => i.AsutuseAssignment)
+        .FirstOrDefaultAsync(s => s.ID == id);
+
+            if (await TryUpdateModelAsync<Treener>(
+                treenerToUpdate,
+                "",
+                i => i.Eesnimi, i => i.Perekonnanimi, i => i.PalkamiseKP, i => i.AsutuseAssignment))
             {
+                if (String.IsNullOrWhiteSpace(treenerToUpdate.AsutuseAssignment?.Location))
+                {
+                    treenerToUpdate.AsutuseAssignment = null;
+                }
                 try
                 {
-                    _context.Update(treener);
                     await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateException /* ex */)
                 {
-                    if (!TreenerExists(treener.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    //Log the error (uncomment ex variable name and write a log.)
+                    ModelState.AddModelError("", "Unable to save changes. " +
+                        "Try again, and if the problem persists, " +
+                        "see your system administrator.");
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(treener);
+            return View(treenerToUpdate);
         }
 
         // GET: Treenerid/Delete/5
@@ -159,7 +167,7 @@ namespace Sport.Views
                 return NotFound();
             }
 
-            var treener = await _context.Treeners
+            var treener = await _context.Treenerid
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (treener == null)
             {
@@ -174,15 +182,15 @@ namespace Sport.Views
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var treener = await _context.Treeners.FindAsync(id);
-            _context.Treeners.Remove(treener);
+            var treener = await _context.Treenerid.FindAsync(id);
+            _context.Treenerid.Remove(treener);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TreenerExists(int id)
         {
-            return _context.Treeners.Any(e => e.ID == id);
+            return _context.Treenerid.Any(e => e.ID == id);
         }
     }
 }
