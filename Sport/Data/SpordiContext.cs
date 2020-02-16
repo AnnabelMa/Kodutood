@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Sport.Models;
 using Microsoft.EntityFrameworkCore;
+//using System.Data.Entity; seda kasutades lööb 14 errorit
 
 namespace Sport.Data
 {

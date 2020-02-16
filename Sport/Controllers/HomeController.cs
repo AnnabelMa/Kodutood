@@ -26,36 +26,47 @@ namespace Sport.Controllers
         }
         public async Task<ActionResult> Üldine()
         {
-            List<RegistreeringuKPGroup> groups = new List<RegistreeringuKPGroup>();
-            var conn = _context.Database.GetDbConnection();
-            try
-            {
-                await conn.OpenAsync();
-                using (var command = conn.CreateCommand())
-                {
-                    string query = "SELECT Registreeringu kuupäev, COUNT(*) AS SportlaneCount "
-                        + "FROM Person "
-                        + "WHERE Discriminator = 'Sportlane' "
-                        + "GROUP BY Registreeringu kuupäev";
-                    command.CommandText = query;
-                    DbDataReader reader = await command.ExecuteReaderAsync();
+            IQueryable<RegistreeringuKPGroup> data =
+                 from sportlane in _context.Sportlased
+                 group sportlane by sportlane.RegistreeringuKP into dateGroup
+                 select new RegistreeringuKPGroup()
+       {
+           RegistreeringuKP = dateGroup.Key,
+           SportlaneCount = dateGroup.Count()
+       };
+            return View(await data.AsNoTracking().ToListAsync());
 
-                    if (reader.HasRows)
-                    {
-                        while (await reader.ReadAsync())
-                        {
-                            var row = new RegistreeringuKPGroup { RegistreeringuKP = reader.GetDateTime(0), SportlaneCount = reader.GetInt32(1) };
-                            groups.Add(row);
-                        }
-                    }
-                    reader.Dispose();
-                }
-            }
-            finally
-            {
-                conn.Close();
-            }
-            return View(groups);
+            /* List<RegistreeringuKPGroup> groups = new List<RegistreeringuKPGroup>();
+             var conn = _context.Database.GetDbConnection();
+             try
+             {
+                 await conn.OpenAsync();
+                 using (var command = conn.CreateCommand())
+                 {
+                     string query = "SELECT Registreeringu kuupäev, COUNT(*) AS SportlaneCount "
+                         + "FROM Person "
+                         + "WHERE Discriminator = 'Sportlane' "
+                         + "GROUP BY Registreeringu kuupäev";
+                     command.CommandText = query;
+                     DbDataReader reader = await command.ExecuteReaderAsync();
+
+                     if (reader.HasRows)
+                     {
+                         while (await reader.ReadAsync())
+                         {
+                             var row = new RegistreeringuKPGroup { RegistreeringuKP = reader.GetDateTime(0), SportlaneCount = reader.GetInt32(1) };
+                             groups.Add(row);
+                         }
+                     }
+                     reader.Dispose();
+                 }
+             }
+             finally
+             {
+                 conn.Close();
+             }
+             return View(groups);
+             */
         }
         private readonly ILogger<HomeController> _logger;
 

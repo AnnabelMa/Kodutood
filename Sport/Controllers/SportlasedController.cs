@@ -18,8 +18,6 @@ namespace Sport.Controllers
         {
             _context = context;
         }
-
-
         // GET: Sportlased
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
