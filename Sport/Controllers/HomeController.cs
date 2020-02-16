@@ -24,7 +24,7 @@ namespace Sport.Controllers
         {
             return View();
         }
-        public async Task<ActionResult> Üldine()
+        public async Task<ActionResult> Uldine()
         {
             IQueryable<RegistreeringuKPGroup> data =
                  from sportlane in _context.Sportlased
