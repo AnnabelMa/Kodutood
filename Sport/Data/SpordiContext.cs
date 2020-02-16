@@ -18,7 +18,7 @@ namespace Sport.Data
         public DbSet<Registreering> Registreeringud { get; set; }
         public DbSet<Sportlane> Sportlased { get; set; }
 
-        public DbSet<Osakond> Osakonds { get; set; }
+        public DbSet<Osakond> Osakonnad { get; set; }
         public DbSet<Treener> Treenerid { get; set; }
         public DbSet<AsutuseAssignment> AsutuseAssignments { get; set; }
         public DbSet<SpordialaAssignment> SpordialaAssignments { get; set; }

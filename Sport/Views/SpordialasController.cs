@@ -10,16 +10,16 @@ using Sport.Models;
 
 namespace Sport.Views
 {
-    public class SpordialasController : Controller
+    public class SpordialadController : Controller
     {
         private readonly SpordiContext _context;
 
-        public SpordialasController(SpordiContext context)
+        public SpordialadController(SpordiContext context)
         {
             _context = context;
         }
 
-        // GET: Spordialas
+        // GET: Spordialad
         public async Task<IActionResult> Index()
         {
             var spordialad = _context.Spordiala //VÕI SpordialaD/S ???
@@ -48,16 +48,15 @@ namespace Sport.Views
             return View(spordiala);
         }
 
-        // GET: Spordialas/Create
+        // GET: Spordialad/Create
         public IActionResult Create()
         {
-            PopulateOsakondsDropDownList();
+            PopulateOsakonnadDropDownList();
             return View();
         }
 
-        // POST: Spordialas/Create
+        // POST: Spordialad/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("SpordialaID,OsakonnaID,Nimi")] Spordiala spordiala)
@@ -68,7 +67,7 @@ namespace Sport.Views
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            PopulateOsakondsDropDownList(spordiala.OsakondID);
+            PopulateOsakonnadDropDownList(spordiala.OsakondID);
             return View(spordiala);
         }
 
@@ -87,7 +86,7 @@ namespace Sport.Views
             {
                 return NotFound();
             }
-            PopulateOsakondsDropDownList(spordiala.OsakondID);
+            PopulateOsakonnadDropDownList(spordiala.OsakondID);
             return View(spordiala);
         }
 
@@ -123,18 +122,18 @@ namespace Sport.Views
                 }
                 return RedirectToAction(nameof(Index));
             }
-            PopulateOsakondsDropDownList(courseToUpdate.OsakondID);
+            PopulateOsakonnadDropDownList(courseToUpdate.OsakondID);
             return View(courseToUpdate);
         }
-        private void PopulateOsakondsDropDownList(object selectedOsakond = null)
+        private void PopulateOsakonnadDropDownList(object selectedOsakond = null)
         {
-            var osakondssQuery = from d in _context.Osakonds
+            var OsakonnadsQuery = from d in _context.Osakonnad
                                    orderby d.Nimi
                                    select d;
-            ViewBag.OsakondID = new SelectList(osakondssQuery.AsNoTracking(), "OsakondID", "Nimi", selectedOsakond);
+            ViewBag.OsakondID = new SelectList(OsakonnadsQuery.AsNoTracking(), "OsakondID", "Nimi", selectedOsakond);
         }
 
-        // GET: Spordialas/Delete/5
+        // GET: Spordialad/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -154,7 +153,7 @@ namespace Sport.Views
             return View(spordiala);
         }
 
-        // POST: Spordialas/Delete/5
+        // POST: Spordialad/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

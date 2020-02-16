@@ -8,7 +8,7 @@ namespace Sport.Models.SpordiViewModels
     public class TreenerIndexData
     {
         public IEnumerable<Treener> Treenerid { get; set; }
-        public IEnumerable<Spordiala> Spordialas { get; set; }
+        public IEnumerable<Spordiala> Spordialad { get; set; }
         public IEnumerable<Registreering> Registreerings { get; set; }
     }
 }

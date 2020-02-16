@@ -42,13 +42,13 @@ namespace Sport.Views
                 ViewData["TreenerID"] = id.Value;
                 Treener treener = viewModel.Treenerid.Where(
                     i => i.ID == id.Value).Single();
-                viewModel.Spordialas = treener.SpordialaAssignments.Select(s => s.Spordiala);
+                viewModel.Spordialad = treener.SpordialaAssignments.Select(s => s.Spordiala);
             }
 
             if (spordialaID != null)
             {
                 ViewData["SpordialaID"] = spordialaID.Value;
-                var selectedCourse = viewModel.Spordialas.Where(x => x.SpordialaID == spordialaID).Single();
+                var selectedCourse = viewModel.Spordialad.Where(x => x.SpordialaID == spordialaID).Single();
                 await _context.Entry(selectedCourse).Collection(x => x.Registreeringud).LoadAsync();
                 foreach (Registreering registreering in selectedCourse.Registreeringud)
                 {

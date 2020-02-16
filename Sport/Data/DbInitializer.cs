@@ -83,7 +83,7 @@ namespace Sport.Data
 
             foreach (Osakond d in osakonds)
             {
-                context.Osakonds.Add(d);
+                context.Osakonnad.Add(d);
             }
             context.SaveChanges();
 

@@ -73,7 +73,7 @@
         }
     </tbody>
 </table>
-@if (Model.Spordialas != null)
+@if (Model.Spordialad != null)
 {
     <h3>Spordialad, mida valitud treener juhendab:</h3>
     <table class="table">
@@ -84,7 +84,7 @@
             <th>Osakond</th>
         </tr>
 
-        @foreach (var item in Model.Spordialas)
+        @foreach (var item in Model.Spordialad)
         {
             string selectedRow = "";
             if (item.SpordialaID == (int?)ViewData["SpordialaID"])
