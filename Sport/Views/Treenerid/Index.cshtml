@@ -1,10 +1,10 @@
-﻿@model IEnumerable<Sport.Models.Treener>
+﻿@model Sport.Models.SpordiViewModels.TreenerIndexData
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Treenerid";
 }
 
-<h1>Index</h1>
+<h1>Treenerid</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -13,20 +13,33 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Perekonnanimi)
+                Perekonnanimi
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Eesnimi)
+                Eesnimi
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PalkamiseKP)
+                Palkamise KP
+            </th>
+            <th>
+                 Asutused
+            </th>
+            <th>
+                Spordialad
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
+        @foreach (var item in Model.Treeners)
+        {
+            string selectedRow = "";
+            if (item.ID == (int?)ViewData["TreenerID"])
+            {
+                selectedRow = "success";
+            }
+        <tr class="@selectedRow">
+
             <td>
                 @Html.DisplayFor(modelItem => item.Perekonnanimi)
             </td>
@@ -37,11 +50,26 @@
                 @Html.DisplayFor(modelItem => item.PalkamiseKP)
             </td>
             <td>
+                @if (item.AsutuseAssignment != null)
+                {
+                    @item.AsutuseAssignment.Location
+                }
+            </td>
+            <td>
+                @{
+                    foreach (var spordiala in item.SpordialaAssignments)
+                    {
+                        @spordiala.Spordiala.SpordialaID @:  @spordiala.Spordiala.Nimi <br />
+                    }
+                }
+            </td>
+            <td>
+                <a asp-action="Index" asp-route-id="@item.ID">Select</a> |
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
             </td>
         </tr>
-}
-    </tbody>
+            }
+        </tbody>
 </table>
