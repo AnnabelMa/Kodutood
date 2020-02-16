@@ -81,6 +81,9 @@ namespace Sport.Views
         // GET: Treenerid/Create
         public IActionResult Create()
         {
+            var treener = new Treener();
+            treener.SpordialaAssignments = new List<SpordialaAssignment>();
+            PopulateAssignedSpordialaData(treener);
             return View();
         }
 
@@ -89,14 +92,24 @@ namespace Sport.Views
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Perekonnanimi,Eesnimi,PalkamiseKP")] Treener treener)
+        public async Task<IActionResult> Create([Bind("Eesnimi, PalkamiseKP, Perekonnanimi, AsutuseAssignment")] Treener treener, string[] selectedSpordialad)
         {
+            if (selectedSpordialad != null)
+            {
+                treener.SpordialaAssignments = new List<SpordialaAssignment>();
+                foreach (var spordiala in selectedSpordialad)
+                {
+                    var spordialaToAdd = new SpordialaAssignment { TreenerID = treener.ID, SpordialaID = int.Parse(spordiala) };
+                    treener.SpordialaAssignments.Add(spordialaToAdd);
+                }
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(treener);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+                PopulateAssignedSpordialaData(treener);
             return View(treener);
         }
 
@@ -237,8 +250,17 @@ namespace Sport.Views
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var treener = await _context.Treenerid.FindAsync(id);
+            Treener treener = await _context.Treenerid
+                .Include(i => i.SpordialaAssignments)
+                .SingleAsync(i => i.ID == id);
+
+            var osakonnad = await _context.Osakonnad
+                .Where(d => d.TreenerID == id)
+                .ToListAsync();
+            osakonnad.ForEach(d => d.TreenerID = null);
+
             _context.Treenerid.Remove(treener);
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
