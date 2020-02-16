@@ -50,7 +50,7 @@ namespace Sport.Views
         // GET: Spordialas/Create
         public IActionResult Create()
         {
-            ViewData["OsakondID"] = new SelectList(_context.Osakonds, "OsakondID", "OsakondID");
+            PopulateOsakondsDropDownList();
             return View();
         }
 
@@ -59,7 +59,7 @@ namespace Sport.Views
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SpordialaID,Nimi,Tulemused,OsakondID")] Spordiala spordiala)
+        public async Task<IActionResult> Create([Bind("SpordialaID,OsakonnaID,Nimi")] Spordiala spordiala)
         {
             if (ModelState.IsValid)
             {
@@ -67,7 +67,7 @@ namespace Sport.Views
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OsakondID"] = new SelectList(_context.Osakonds, "OsakondID", "OsakondID", spordiala.OsakondID);
+            PopulateOsakondsDropDownList(spordiala.OsakondID);
             return View(spordiala);
         }
 
@@ -79,49 +79,58 @@ namespace Sport.Views
                 return NotFound();
             }
 
-            var spordiala = await _context.Spordiala.FindAsync(id);
+            var spordiala = await _context.Spordiala
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.SpordialaID == id);
             if (spordiala == null)
             {
                 return NotFound();
             }
-            ViewData["OsakondID"] = new SelectList(_context.Osakonds, "OsakondID", "OsakondID", spordiala.OsakondID);
+            PopulateOsakondsDropDownList(spordiala.OsakondID);
             return View(spordiala);
         }
 
         // POST: Spordialas/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("SpordialaID,Nimi,Tulemused,OsakondID")] Spordiala spordiala)
+        public async Task<IActionResult> EditPost(int? id)
         {
-            if (id != spordiala.SpordialaID)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            var courseToUpdate = await _context.Spordiala
+                .FirstOrDefaultAsync(c => c.SpordialaID == id);
+
+            if (await TryUpdateModelAsync<Spordiala>(courseToUpdate,
+                "",
+                c => c.SpordialaID, c => c.Nimi))
             {
                 try
                 {
-                    _context.Update(spordiala);
                     await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateException /* ex */)
                 {
-                    if (!SpordialaExists(spordiala.SpordialaID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    //Log the error (uncomment ex variable name and write a log.)
+                    ModelState.AddModelError("", "Unable to save changes. " +
+                        "Try again, and if the problem persists, " +
+                        "see your system administrator.");
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OsakondID"] = new SelectList(_context.Osakonds, "OsakondID", "OsakondID", spordiala.OsakondID);
-            return View(spordiala);
+            PopulateOsakondsDropDownList(courseToUpdate.OsakondID);
+            return View(courseToUpdate);
+        }
+        private void PopulateOsakondsDropDownList(object selectedOsakond = null)
+        {
+            var osakondssQuery = from d in _context.Osakonds
+                                   orderby d.Nimi
+                                   select d;
+            ViewBag.OsakondID = new SelectList(osakondssQuery.AsNoTracking(), "OsakondID", "Nimi", selectedOsakond);
         }
 
         // GET: Spordialas/Delete/5
