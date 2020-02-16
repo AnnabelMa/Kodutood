@@ -40,6 +40,33 @@
         </form>
     </div>
 </div>
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <table>
+            <tr>
+                @{
+                    int cnt = 0;
+                    List<Sport.Models.SpordiViewModels.AssignedSpordialaData> spordialad = ViewBag.Spordialad;
+
+                    foreach (var spordiala in spordialad)
+                    {
+                        if (cnt++ % 3 == 0)
+                        {
+                        @:</tr><tr>
+                        }
+                        @:<td>
+                            <input type="checkbox"
+                                   name="selectedSpordialad"
+                                   value="@spordiala.SpordialaID"
+                                   @(Html.Raw(spordiala.Assigned ? "checked=\"checked\"" : "")) />
+                            @spordiala.SpordialaID @:  @spordiala.Nimi
+                        @:</td>
+                    }
+                @:</tr>
+                }
+            </table>
+        </div>
+    </div>
 
 <div>
     <a asp-action="Index">Back to List</a>
