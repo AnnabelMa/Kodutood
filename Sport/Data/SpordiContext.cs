@@ -18,11 +18,24 @@ namespace Sport.Data
         public DbSet<Registreering> Registreeringud { get; set; }
         public DbSet<Sportlane> Sportlased { get; set; }
 
+        public DbSet<Osakond> Osakonds { get; set; }
+        public DbSet<Treener> Treeners { get; set; }
+        public DbSet<AsutuseAssignment> AsutuseAssignments { get; set; }
+        public DbSet<SpordialaAssignment> SpordialaAssignments { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Spordiala>().ToTable("Spordiala");
             modelBuilder.Entity<Registreering>().ToTable("Registreering");
             modelBuilder.Entity<Sportlane>().ToTable("Sportlane");
+
+            modelBuilder.Entity<Osakond>().ToTable("Osakond");
+            modelBuilder.Entity<Treener>().ToTable("Treener");
+            modelBuilder.Entity<AsutuseAssignment>().ToTable("AsutuseAssignment");
+            modelBuilder.Entity<SpordialaAssignment>().ToTable("SpordialaAssignment");
+
+            modelBuilder.Entity<SpordialaAssignment>()
+                .HasKey(c => new { c.SpordialaID, c.TreenerID });
         }
     }
 }
