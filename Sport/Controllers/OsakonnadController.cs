@@ -36,6 +36,7 @@ namespace Sport.Controllers
 
             var osakond = await _context.Osakonnad
                 .Include(o => o.Administrator)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.OsakondID == id);
             if (osakond == null)
             {
@@ -77,7 +78,11 @@ namespace Sport.Controllers
                 return NotFound();
             }
 
-            var osakond = await _context.Osakonnad.FindAsync(id);
+            var osakond = await _context.Osakonnad
+                .Include(i => i.Administrator)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.OsakondID == id);
+
             if (osakond == null)
             {
                 return NotFound();
@@ -91,36 +96,78 @@ namespace Sport.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("OsakondID,Nimi,Eelarve,AlgusKP,TreenerID,RowVersion")] Osakond osakond)
+        public async Task<IActionResult> Edit(int? id, byte[] rowVersion)
         {
-            if (id != osakond.OsakondID)
+            if (id == null)
             {
                 return NotFound();
             }
+            var osakondToUpdate = await _context.Osakonnad.Include(i => i.Administrator).FirstOrDefaultAsync(m => m.OsakondID == id);
 
-            if (ModelState.IsValid)
+            if (osakondToUpdate == null)
+            {
+                Osakond deletedOsakond = new Osakond();
+                await TryUpdateModelAsync(deletedOsakond);
+                ModelState.AddModelError(string.Empty, "Ei saa muudatusi salvestada. Osakond on teise kasutaja poolt kustutatud.");
+                ViewData["TreenerID"] = new SelectList(_context.Treenerid, "ID", "Täisnimi", deletedOsakond.TreenerID);
+                return View(deletedOsakond);
+            }
+            _context.Entry(osakondToUpdate).Property("RowVersion").OriginalValue = rowVersion;
+
+            if (await TryUpdateModelAsync<Osakond>(osakondToUpdate, "", 
+                s=> s.Nimi, s => s.AlgusKP, s => s.Eelarve, s => s.TreenerID))
             {
                 try
                 {
-                    _context.Update(osakond);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateConcurrencyException ex)
                 {
-                    if (!OsakondExists(osakond.OsakondID))
+                    var exceptionEntry = ex.Entries.Single();
+                    var clientValues = (Osakond)exceptionEntry.Entity;
+                    var databaseEntry = exceptionEntry.GetDatabaseValues();
+                    if (databaseEntry == null)
                     {
-                        return NotFound();
+                        ModelState.AddModelError(string.Empty,
+                           "Ei saa muudatusi salvestada. Osakond on teise kasutaja poolt kustutatud.");
                     }
                     else
                     {
-                        throw;
+                        var databaseValues = (Osakond)databaseEntry.ToObject();
+
+                        if (databaseValues.Nimi != clientValues.Nimi)
+                        {
+                            ModelState.AddModelError("Nimi", $"Current value: {databaseValues.Nimi}");
+                        }
+                        if (databaseValues.Eelarve != clientValues.Eelarve)
+                        {
+                            ModelState.AddModelError("Eelarve", $"Current value: {databaseValues.Eelarve:c}");
+                        }
+                        if (databaseValues.AlgusKP != clientValues.AlgusKP)
+                        {
+                            ModelState.AddModelError("AlgusKP", $"Current value: {databaseValues.AlgusKP:d}");
+                        }
+                        if (databaseValues.TreenerID != clientValues.TreenerID)
+                        {
+                            Treener databaseInstructor = await _context.Treenerid.FirstOrDefaultAsync(i => i.ID == databaseValues.TreenerID);
+                            ModelState.AddModelError("TreenerID", $"Current value: {databaseInstructor?.Täisnimi}");
+                        }
+
+                        ModelState.AddModelError(string.Empty, "The record you attempted to edit "
+                                + "was modified by another user after you got the original value. The "
+                                + "edit operation was canceled and the current values in the database "
+                                + "have been displayed. If you still want to edit this record, click "
+                                + "the Save button again. Otherwise click the Back to List hyperlink.");
+                        osakondToUpdate.RowVersion = (byte[])databaseValues.RowVersion;
+                        ModelState.Remove("RowVersion");
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
-            ViewData["TreenerID"] = new SelectList(_context.Treenerid, "ID", "Täisnimi", osakond.TreenerID);
-            return View(osakond);
+            ViewData["TreenerID"] = new SelectList(_context.Treenerid, "ID", "Täisnimi", osakondToUpdate.TreenerID);
+            return View(osakondToUpdate);
         }
+    
 
         // GET: Osakonnad/Delete/5
         public async Task<IActionResult> Delete(int? id)
