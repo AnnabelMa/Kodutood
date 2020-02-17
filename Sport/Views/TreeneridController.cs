@@ -137,7 +137,7 @@ namespace Sport.Views
         }
         private void PopulateAssignedSpordialaData(Treener treener)
         {
-            var allSpordialad = _context.Spordiala;
+            var allSpordialad = _context.Spordialad;
             var treenerSpordialad = new HashSet<int>(treener.SpordialaAssignments.Select(c => c.SpordialaID));
             var viewModel = new List<AssignedSpordialaData>();
             foreach (var spordiala in allSpordialad)
@@ -206,7 +206,7 @@ namespace Sport.Views
             var selectedSpordialaHS = new HashSet<string>(selectedSpordiala);
             var treenerSpordiala = new HashSet<int>
                 (treenerToUpdate.SpordialaAssignments.Select(c => c.Spordiala.SpordialaID));
-            foreach (var spordiala in _context.Spordiala)
+            foreach (var spordiala in _context.Spordialad)
             {
                 if (selectedSpordialaHS.Contains(spordiala.SpordialaID.ToString()))
                 {

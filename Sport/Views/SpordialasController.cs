@@ -22,7 +22,7 @@ namespace Sport.Views
         // GET: Spordialad
         public async Task<IActionResult> Index()
         {
-            var spordialad = _context.Spordiala //VÕI SpordialaD/S ???
+            var spordialad = _context.Spordialad
                 .Include(c => c.Osakond)
                 .AsNoTracking();
             return View(await spordialad.ToListAsync());
@@ -36,7 +36,7 @@ namespace Sport.Views
                 return NotFound();
             }
 
-            var spordiala = await _context.Spordiala
+            var spordiala = await _context.Spordialad
                 .Include(s => s.Osakond)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.SpordialaID == id);
@@ -79,7 +79,7 @@ namespace Sport.Views
                 return NotFound();
             }
 
-            var spordiala = await _context.Spordiala
+            var spordiala = await _context.Spordialad
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.SpordialaID == id);
             if (spordiala == null)
@@ -102,7 +102,7 @@ namespace Sport.Views
                 return NotFound();
             }
 
-            var courseToUpdate = await _context.Spordiala
+            var courseToUpdate = await _context.Spordialad
                 .FirstOrDefaultAsync(c => c.SpordialaID == id);
 
             if (await TryUpdateModelAsync<Spordiala>(courseToUpdate,
@@ -141,7 +141,7 @@ namespace Sport.Views
                 return NotFound();
             }
 
-            var spordiala = await _context.Spordiala
+            var spordiala = await _context.Spordialad
                 .Include(s => s.Osakond)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.SpordialaID == id);
@@ -158,15 +158,15 @@ namespace Sport.Views
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var spordiala = await _context.Spordiala.FindAsync(id);
-            _context.Spordiala.Remove(spordiala);
+            var spordiala = await _context.Spordialad.FindAsync(id);
+            _context.Spordialad.Remove(spordiala);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool SpordialaExists(int id)
         {
-            return _context.Spordiala.Any(e => e.SpordialaID == id);
+            return _context.Spordialad.Any(e => e.SpordialaID == id);
         }
     }
 }

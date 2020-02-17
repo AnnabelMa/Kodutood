@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Sport.Models;
 using Microsoft.EntityFrameworkCore;
-//using System.Data.Entity; seda kasutades lööb 14 errorit
 
 namespace Sport.Data
 {
@@ -14,7 +13,7 @@ namespace Sport.Data
         {
         }
 
-        public DbSet<Spordiala> Spordiala { get; set; }
+        public DbSet<Spordiala> Spordialad { get; set; }
         public DbSet<Registreering> Registreeringud { get; set; }
         public DbSet<Sportlane> Sportlased { get; set; }
         public DbSet<Osakond> Osakonnad { get; set; }
@@ -28,7 +27,6 @@ namespace Sport.Data
             modelBuilder.Entity<Spordiala>().ToTable("Spordiala");
             modelBuilder.Entity<Registreering>().ToTable("Registreering");
             modelBuilder.Entity<Sportlane>().ToTable("Sportlane");
-
             modelBuilder.Entity<Osakond>().ToTable("Osakond");
             modelBuilder.Entity<Treener>().ToTable("Treener");
             modelBuilder.Entity<AsutuseAssignment>().ToTable("AsutuseAssignment");

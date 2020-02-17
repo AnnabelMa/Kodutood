@@ -12,7 +12,6 @@ namespace Sport.Models
         [Display(Name = "RegistreeringuKP")]
         public DateTime RegistreeringuKP { get; set; }
 
-
         public ICollection<Registreering> Registreeringud { get; set; }
     }
 }
