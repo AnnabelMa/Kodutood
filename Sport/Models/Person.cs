@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Sport.Models
 {
-    public class Person
+    public abstract class Person
     {
         public int ID { get; set; }
 
