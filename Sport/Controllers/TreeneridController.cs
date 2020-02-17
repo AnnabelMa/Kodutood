@@ -19,7 +19,6 @@ namespace Sport.Controllers
         {
             _context = context;
         }
-
         // GET: Treenerid
         public async Task<IActionResult> Index(int? id, int? spordialaID)
         {
