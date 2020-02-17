@@ -9,7 +9,7 @@ using Sport.Data;
 using Sport.Models;
 using Sport.Models.SpordiViewModels;
 
-namespace Sport.Views
+namespace Sport.Controllers
 {
     public class TreeneridController : Controller
     {

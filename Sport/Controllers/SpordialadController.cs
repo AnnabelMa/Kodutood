@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Sport.Data;
 using Sport.Models;
 
-namespace Sport.Views
+namespace Sport.Controllers
 {
     public class SpordialadController : Controller
     {
