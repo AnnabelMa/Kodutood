@@ -25,6 +25,10 @@ namespace Sport.Models
 
         public int? TreenerID { get; set; }
 
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
+
+
         public Treener Administrator { get; set; }
         public ICollection<Spordiala> Spordialad { get; set; }
     }
