@@ -35,6 +35,7 @@ namespace Sport.Data
 
             modelBuilder.Entity<SpordialaAssignment>()
                 .HasKey(c => new { c.SpordialaID, c.TreenerID });
+
         }
     }
 }
