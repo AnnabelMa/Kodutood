@@ -170,7 +170,7 @@ namespace Sport.Controllers
     
 
         // GET: Osakonnad/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, bool? concurrencyError)
         {
             if (id == null)
             {
@@ -179,24 +179,47 @@ namespace Sport.Controllers
 
             var osakond = await _context.Osakonnad
                 .Include(o => o.Administrator)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.OsakondID == id);
             if (osakond == null)
             {
+                if (concurrencyError.GetValueOrDefault())
+                {
+                    return RedirectToAction(nameof(Index));
+                }
                 return NotFound();
             }
-
+            if (concurrencyError.GetValueOrDefault())
+            {
+                ViewData["ConcurrencyErrorMessage"] = "The record you attempted to delete "
+                    + "was modified by another user after you got the original values. "
+                    + "The delete operation was canceled and the current values in the "
+                    + "database have been displayed. If you still want to delete this "
+                    + "record, click the Delete button again. Otherwise "
+                    + "click the Back to List hyperlink.";
+            }
             return View(osakond);
         }
 
         // POST: Osakonnad/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Delete(Osakond osakond)
         {
-            var osakond = await _context.Osakonnad.FindAsync(id);
-            _context.Osakonnad.Remove(osakond);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                if (await _context.Osakonnad.AnyAsync(m => m.OsakondID == osakond.OsakondID))
+                {
+                    _context.Osakonnad.Remove(osakond);
+                    await _context.SaveChangesAsync();
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateConcurrencyException /* ex */)
+            {
+                //Log the error (uncomment ex variable name and write a log.)
+                return RedirectToAction(nameof(Delete), new { concurrencyError = true, id = osakond.OsakondID });
+            }
         }
 
         private bool OsakondExists(int id)
