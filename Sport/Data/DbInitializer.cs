@@ -114,7 +114,7 @@ namespace Sport.Data
 
             foreach (Spordiala c in spordialad)
             {
-                context.Spordiala.Add(c);
+                context.Spordialad.Add(c);
             }
             context.SaveChanges();
 

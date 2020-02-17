@@ -34,12 +34,12 @@ namespace Sport.Migrations
                 oldType: "nvarchar(max)",
                 oldNullable: true);
 
-           /* migrationBuilder.AddColumn<int>(
+          /* migrationBuilder.AddColumn<int>(
                 name: "OsakondID",
                 table: "Spordiala",
                 nullable: false,
                 defaultValue: 0);
-           */
+    */
 
             migrationBuilder.AlterColumn<int>(
                 name: "SportlaneID",

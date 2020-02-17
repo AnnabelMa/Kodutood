@@ -1,16 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+
 namespace Sport.Models
 {
-    public class Treener
+    public class Treener : Person
     {
-        public int ID { get; set; }
+        //Kood Person inheritance'i jaoks:
+         [DataType(DataType.Date)]
+         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+         [Display(Name = "PalkamiseKP")]
+         public DateTime PalkamiseKP { get; set; }
 
+         public ICollection<SpordialaAssignment> SpordialaAssignments { get; set; }
+         public AsutuseAssignment AsutuseAssignment { get; set; }
+
+
+        // kood enne Person.cs loomist:
+        /*public int ID { get; set; }
         [Required]
         [Display(Name = "Perekonnanimi")]
         [StringLength(50)]
@@ -21,10 +30,10 @@ namespace Sport.Models
         [Display(Name = "Eesnimi")]
         [StringLength(50)]
         public string Eesnimi { get; set; }
-
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Palkamise KP")]
+        
+        [Display(Name = "PalkamiseKP")]
         public DateTime PalkamiseKP { get; set; }
 
         [Display(Name = "Täisnimi")]
@@ -35,5 +44,6 @@ namespace Sport.Models
 
         public ICollection<SpordialaAssignment> SpordialaAssignments { get; set; }
         public AsutuseAssignment AsutuseAssignment { get; set; }
+        */
     }
 }

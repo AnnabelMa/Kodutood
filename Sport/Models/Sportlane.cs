@@ -5,9 +5,21 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Sport.Models
 {
-    public class Sportlane
+    public class Sportlane : Person
     {
-        public int ID { get; set; }
+        // Kood,  inheritance Person jaoks:
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Registreeringu kuupäev")]
+        public DateTime RegistreeringuKP { get; set; }
+
+        public ICollection<Registreering> Registreeringud { get; set; }
+
+    }
+
+        //Kood enne Person.cs loomist:
+        /*public int ID { get; set; }
         [Required]
         [StringLength(50)]
         [Display(Name = "Perekonnanimi")]
@@ -18,7 +30,8 @@ namespace Sport.Models
         public string Eesnimi { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Registreerimise kuupäev")]
+        
+        [Display(Name = "RegistreeringuKP")]
         public DateTime RegistreeringuKP { get; set; }
         [Display(Name = "Täisnimi")]
         public string Täisnimi
@@ -29,5 +42,7 @@ namespace Sport.Models
             }
         }
         public ICollection<Registreering> Registreeringud { get; set; }
-    }
+
+        */
+    
 }
