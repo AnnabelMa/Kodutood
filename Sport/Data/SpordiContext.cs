@@ -20,7 +20,7 @@ namespace Sport.Data
         public DbSet<Treener> Treenerid { get; set; }
         public DbSet<AsutuseAssignment> AsutuseAssignments { get; set; }
         public DbSet<SpordialaAssignment> SpordialaAssignments { get; set; }
-        public DbSet<Person> People { get; set; }
+        //public DbSet<Person> People { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -31,7 +31,7 @@ namespace Sport.Data
             modelBuilder.Entity<Treener>().ToTable("Treener");
             modelBuilder.Entity<AsutuseAssignment>().ToTable("AsutuseAssignment");
             modelBuilder.Entity<SpordialaAssignment>().ToTable("SpordialaAssignment");
-            modelBuilder.Entity<Person>().ToTable("Person");
+            //modelBuilder.Entity<Person>().ToTable("Person");
 
             modelBuilder.Entity<SpordialaAssignment>()
                 .HasKey(c => new { c.SpordialaID, c.TreenerID });

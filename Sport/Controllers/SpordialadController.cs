@@ -22,10 +22,10 @@ namespace Sport.Controllers
         // GET: Spordialad
         public async Task<IActionResult> Index()
         {
-            var spordialad = _context.Spordialad
+            var spordiala = _context.Spordialad
                 .Include(c => c.Osakond)
                 .AsNoTracking();
-            return View(await spordialad.ToListAsync());
+            return View(await spordiala.ToListAsync()); //ütleb, et siin mingi error 
         }
 
         // GET: Spordialas/Details/5

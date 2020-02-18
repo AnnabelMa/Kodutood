@@ -12,7 +12,7 @@ namespace Sport.Migrations
                 table: "Registreering");
 
             migrationBuilder.DropColumn(
-                name: "SportlaseID",
+                name: "SportlaneID",
                 table: "Registreering");
 
             migrationBuilder.AlterColumn<string>(
@@ -226,7 +226,7 @@ namespace Sport.Migrations
                 oldClrType: typeof(int));
 
             migrationBuilder.AddColumn<int>(
-                name: "SportlaseID",
+                name: "SportlaneID",
                 table: "Registreering",
                 type: "int",
                 nullable: false,
