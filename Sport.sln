@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sport", "Sport\Sport.csproj", "{95448AFD-A533-421E-B06D-31A83FCE8371}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LOGI", "LOGI", "{C29268BE-A646-46FC-8292-BE329F761BFF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LOGI", "LOGI", "{7152F84E-BEAE-4D6B-A99D-EAA25198566A}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\..\..\Desktop\PROGE_Time recording log.xlsx = ..\..\..\..\Desktop\PROGE_Time recording log.xlsx
+		PROGE_Time recording log.xlsx = PROGE_Time recording log.xlsx
 	EndProjectSection
 EndProject
 Global
