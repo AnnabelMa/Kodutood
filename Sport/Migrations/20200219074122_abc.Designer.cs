@@ -10,8 +10,8 @@ using Sport.Data;
 namespace Sport.Migrations
 {
     [DbContext(typeof(SpordiContext))]
-    [Migration("20200218212149_Inheritance")]
-    partial class Inheritance
+    [Migration("20200219074122_abc")]
+    partial class abc
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
