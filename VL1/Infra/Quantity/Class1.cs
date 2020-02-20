@@ -1,4 +1,4 @@
-﻿namespace VL1.Infra
+﻿namespace VL1.Infra.Quantity
 {
     public class Class1
     {

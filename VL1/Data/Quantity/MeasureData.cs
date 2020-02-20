@@ -1,4 +1,6 @@
-﻿namespace VL1.Data.Common
+﻿using VL1.Data.Common;
+
+namespace VL1.Data.Quantity
 {
     public class MeasureData: DefinedEntityData
     {
