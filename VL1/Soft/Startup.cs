@@ -24,7 +24,7 @@ namespace VL1.Soft
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false) //muudetud fasle-iks, et saaks sisse logida
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
         }

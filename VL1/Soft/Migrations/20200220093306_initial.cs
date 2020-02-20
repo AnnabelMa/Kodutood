@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace VL1.Soft.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,6 +44,22 @@ namespace VL1.Soft.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Measures",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Code = table.Column<string>(nullable: true),
+                    Definition = table.Column<string>(nullable: true),
+                    Validfrom = table.Column<DateTime>(nullable: true),
+                    ValidTo = table.Column<DateTime>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Measures", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -208,6 +224,9 @@ namespace VL1.Soft.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Measures");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

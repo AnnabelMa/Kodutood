@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infra", "Infra\Infra.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pages", "Pages\Pages.csproj", "{3E41F70F-9507-46E9-8914-E82CB06CACBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Soft", "Soft\Soft.csproj", "{55635B98-A4C6-4BC7-B7CB-D02BE299547F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Soft", "Soft\Soft.csproj", "{55635B98-A4C6-4BC7-B7CB-D02BE299547F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
