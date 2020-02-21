@@ -32,7 +32,7 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var Item in Model.Items) {
+@foreach (var Item in Model.Items) { //annab nullreference exceptioni
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => Item.Name)

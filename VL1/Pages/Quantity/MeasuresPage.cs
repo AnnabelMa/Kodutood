@@ -9,7 +9,6 @@ namespace VL1.Pages.Quantity
     public abstract class MeasuresPage: PageModel
     {
         protected internal readonly IMeasuresRepository data;
-
         protected internal MeasuresPage(IMeasuresRepository r) => data = r;
 
         [BindProperty]
