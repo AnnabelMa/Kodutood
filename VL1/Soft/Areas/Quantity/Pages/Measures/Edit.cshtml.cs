@@ -23,7 +23,7 @@ namespace Soft.Areas.Quantity.Pages.Measures
         [BindProperty]
         public MeasureView MeasureView { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(string id) //otsib id
         {
             if (id == null)
             {
