@@ -1,5 +1,5 @@
 ﻿@page
-@model Soft.Areas.Quantity.Pages.Measures.IndexModel
+@model VL1.Soft.Areas.Quantity.Pages.Measures.IndexModel
 
 @{
     ViewData["Title"] = "Index";
@@ -32,27 +32,27 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var Item in Model.Items) { //annab nullreference exceptioni
+@foreach (var item in Model.Items) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => Item.Name)
+                @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => Item.Code)
+                @Html.DisplayFor(modelItem => item.Code)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => Item.Definition)
+                @Html.DisplayFor(modelItem => item.Definition)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => Item.Validfrom)
+                @Html.DisplayFor(modelItem => item.Validfrom)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => Item.ValidTo)
+                @Html.DisplayFor(modelItem => item.ValidTo)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@Item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@Item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@Item.Id">Delete</a>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }
