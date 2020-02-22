@@ -1,32 +1,50 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-//using VL1.Domain.Common;
 using VL1.Domain.Quantity;
 using System.Linq;
+using VL1.Data.Quantity;
 
 namespace VL1.Infra.Quantity
 {
     public class MeasuresRepository : IMeasuresRepository
     {
-        private readonly QuantityDbContext db;
+        protected internal QuantityDbContext db;
+        public string SortOrder { get; set; }
 
         public MeasuresRepository(QuantityDbContext c)
         {
             db = c;
         }
-
         public async Task<List<Measure>> Get()
         {
-            var l = await db.Measures.ToListAsync();
-
+            var list = await CreateSorted().ToListAsync();//SELECT lause paneb kirja
             //valib kõik, teeb ära teisenduse, lisab listi.
-            return l.Select(e => new Measure(e)).ToList(); //foreach tsükkel algupäraselt
-            
+            return list.Select(e => new Measure(e)).ToList(); //foreach tsükkel algupäraselt
+        }
+        private IQueryable<MeasureData> CreateSorted()
+        {
+            IQueryable<MeasureData> measures = from s in db.Measures select s;
+            switch (SortOrder)
+            {
+                case "name_desc":
+                    measures = measures.OrderByDescending(s => s.Name);
+                    break;
+                case "Date":
+                    measures = measures.OrderBy(s => s.Validfrom);
+                    break;
+                case "date_desc":
+                    measures = measures.OrderByDescending(s => s.Validfrom);
+                    break;
+                default:
+                    measures = measures.OrderBy(s => s.Name);
+                    break;
+            }
+            return measures.AsNoTracking();//teeb päringu ära
         }
         public async Task<Measure> Get(string id)
         {
-            var d = await db.Measures.FirstOrDefaultAsync(m => m.Id == id);
+            var d = await db.Measures.FirstOrDefaultAsync(m => m.Id == id);//paneb SELECT lause kirja SQLis
             return new Measure(d);
         }
         public async Task Delete(string id)
@@ -69,26 +87,5 @@ namespace VL1.Infra.Quantity
                 //}
             }
         }
-
-        //Task<Measure> IRepository<Measure>.Get(string id)
-        //{
-        //    throw new System.NotImplementedException();
-        //}
-
-        //Task IRepository<Measure>.Delete(string id)
-        //{
-        //    throw new System.NotImplementedException();
-        //}
-
-        //Task IRepository<Measure>.Add(Measure obj)
-        //{
-        //    throw new System.NotImplementedException();
-        //}
-
-        //Task IRepository<Measure>.Update(Measure obj)
-        //{
-        //    throw new System.NotImplementedException();
-        //}
-        
     }
 }

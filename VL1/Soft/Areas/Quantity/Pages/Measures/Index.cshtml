@@ -11,10 +11,12 @@
     <a asp-page="Create">Create New</a>
 </p>
 <table class="table">
-    <thead>
+    <thead> @*tabeli päis*@
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Items[0].Name)
+                <a asp-page=" ./Index" asp-route-sortOrder="@Model.NameSort">
+                    @Html.DisplayNameFor(model => model.Items[0].Name)
+                </a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Items[0].Code)
@@ -23,7 +25,9 @@
                 @Html.DisplayNameFor(model => model.Items[0].Definition)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Items[0].Validfrom)
+                <a asp-page=" ./Index" asp-route-sortOrder="@Model.DateSort">
+                    @Html.DisplayNameFor(model => model.Items[0].Validfrom)
+                </a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Items[0].ValidTo)
@@ -32,7 +36,7 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Items) {
+        @foreach (var item in Model.Items) { 
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
