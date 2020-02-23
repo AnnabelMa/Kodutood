@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using VL1.Domain.Quantity;
 using System.Linq;
 using VL1.Data.Quantity;
+using System;
 
 namespace VL1.Infra.Quantity
 {
@@ -11,6 +12,7 @@ namespace VL1.Infra.Quantity
     {
         protected internal QuantityDbContext db;
         public string SortOrder { get; set; }
+        public string SearchString { get; set; }
 
         public MeasuresRepository(QuantityDbContext c)
         {
@@ -18,10 +20,23 @@ namespace VL1.Infra.Quantity
         }
         public async Task<List<Measure>> Get()
         {
-            var list = await CreateSorted().ToListAsync();//SELECT lause paneb kirja
+            var list = await createFiltered(CreateSorted()).ToListAsync();//SELECT lause paneb kirja
             //valib kõik, teeb ära teisenduse, lisab listi.
+            //Filtered teeb select lausesse "väär" osa
             return list.Select(e => new Measure(e)).ToList(); //foreach tsükkel algupäraselt
         }
+
+        private IQueryable<MeasureData> createFiltered(IQueryable<MeasureData> set)
+        {
+            if (string.IsNullOrEmpty(SearchString)) return set;
+            return set.Where(s => s.Name.Contains(SearchString) 
+                                    || s.Code.Contains(SearchString)
+                                    || s.Id.Contains(SearchString)
+                                    || s.Definition.Contains(SearchString)
+                                    || s.Validfrom.ToString().Contains(SearchString)
+                                    || s.ValidTo.ToString().Contains(SearchString));
+        }
+
         private IQueryable<MeasureData> CreateSorted()
         {
             IQueryable<MeasureData> measures = from s in db.Measures select s;
@@ -40,7 +55,7 @@ namespace VL1.Infra.Quantity
                     measures = measures.OrderBy(s => s.Name);
                     break;
             }
-            return measures.AsNoTracking();//teeb päringu ära
+            return measures.AsNoTracking();//teeb päringu
         }
         public async Task<Measure> Get(string id)
         {
@@ -77,14 +92,6 @@ namespace VL1.Infra.Quantity
             }
             catch (DbUpdateConcurrencyException)
             {
-                //if (!MeasureViewExists(db.Id))
-                //{
-                //    return NotFound();
-                //}
-                //else
-                //{
-                //    throw;
-                //}
             }
         }
     }

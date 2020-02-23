@@ -12,12 +12,15 @@ namespace Soft.Areas.Quantity.Pages.Measures
 
         public string NameSort { get; private set; }//genereeritud propertyd
         public string DateSort { get; private set; }
+        public string SearchString;
 
-        public async Task OnGetAsync(string sortOrder)
+        public async Task OnGetAsync(string sortOrder, string searchString)
         {
             NameSort = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             DateSort = sortOrder == "Date" ? "date_desc" : "Date";
             db.SortOrder = sortOrder;
+            SearchString = searchString;
+            db.SearchString = SearchString;
             var l = await db.Get();
             Items = new List<MeasureView>();
 
