@@ -10,7 +10,7 @@ namespace Tests
         [TestMethod]
         public void IsSealed()
         {
-            Assert.IsTrue(type.GetType().IsSealed);
+            Assert.IsTrue(type.IsSealed);
         }
     }
 }

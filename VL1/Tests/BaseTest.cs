@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using VL1.Aids;
 
 namespace Tests
 {
@@ -23,9 +24,9 @@ namespace Tests
         //kui on get, set ja rnd funktsioon, siis võtan d, võtan get funktsiooni, 
         //kontrollin, et ei annaks tulemust; panen setiga d õigesse kohta, 
         //saan kontrollida, kas on sama väärtus
-        protected static void isNullableProperty<T>(Func<T> get, Action<T> set, Func<T> rnd) //where T: Nullable
+        protected static void isNullableProperty<T>(Func<T> get, Action<T> set) //where T: Nullable
         {
-            var d = rnd();
+            var d = (T) GetRandom.Value(typeof(T));
             Assert.AreNotEqual(d, get());
             set(d);
             Assert.AreEqual(d, get());
