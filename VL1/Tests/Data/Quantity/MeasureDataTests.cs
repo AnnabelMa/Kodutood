@@ -5,7 +5,7 @@ using VL1.Data.Quantity;
 namespace Tests.Data.Quantity
 {
     [TestClass]
-    public class MeasureDataTests : BaseTest<MeasureData, DefinedEntityData>
+    public class MeasureDataTests : SealedClassTest<MeasureData, DefinedEntityData>
     {
     }
 }

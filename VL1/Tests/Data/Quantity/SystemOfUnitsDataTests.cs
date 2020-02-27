@@ -1,14 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using VL1.Data.Common;
 using VL1.Data.Quantity;
 
 namespace Tests.Data.Quantity
 {
     [TestClass]
-    public class UnitDataTests : SealedClassTest<UnitData, DefinedEntityData>
+    public class SystemOfUnitsDataTests<SystemOfUnitsData> : SealedClassTest<MeasureData, DefinedEntityData>
     {
+
     }
 }

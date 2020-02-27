@@ -5,7 +5,7 @@ using VL1.Data.Common;
 
 namespace VL1.Data.Quantity
 {
-    public class SystemOfUnitsData : DefinedEntityData
+    public sealed class SystemOfUnitsData : DefinedEntityData
     {
     }
 }

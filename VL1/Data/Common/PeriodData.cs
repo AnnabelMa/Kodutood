@@ -2,7 +2,7 @@
 
 namespace VL1.Data.Common
 {
-    public class PeriodData
+    public abstract class PeriodData
     {
         public DateTime? ValidFrom { get; set; }
        
