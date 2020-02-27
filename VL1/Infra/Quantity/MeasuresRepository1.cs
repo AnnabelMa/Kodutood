@@ -33,7 +33,7 @@ namespace VL1.Infra.Quantity
                                     || s.Code.Contains(SearchString)
                                     || s.Id.Contains(SearchString)
                                     || s.Definition.Contains(SearchString)
-                                    || s.Validfrom.ToString().Contains(SearchString)
+                                    || s.ValidFrom.ToString().Contains(SearchString)
                                     || s.ValidTo.ToString().Contains(SearchString));
         }
 
@@ -46,10 +46,10 @@ namespace VL1.Infra.Quantity
                     measures = measures.OrderByDescending(s => s.Name);
                     break;
                 case "Date":
-                    measures = measures.OrderBy(s => s.Validfrom);
+                    measures = measures.OrderBy(s => s.ValidFrom);
                     break;
                 case "date_desc":
-                    measures = measures.OrderByDescending(s => s.Validfrom);
+                    measures = measures.OrderByDescending(s => s.ValidFrom);
                     break;
                 default:
                     measures = measures.OrderBy(s => s.Name);
@@ -83,7 +83,7 @@ namespace VL1.Infra.Quantity
             d.Code = obj.Data.Code;
             d.Name = obj.Data.Name;
             d.Definition = obj.Data.Definition;
-            d.Validfrom = obj.Data.Validfrom;
+            d.ValidFrom = obj.Data.ValidFrom;
             d.ValidTo = obj.Data.ValidTo;
             db.Measures.Update(d);
             try

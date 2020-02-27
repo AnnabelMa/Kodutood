@@ -1,5 +1,6 @@
 ﻿@page
-@model VL1.Soft.EditModel
+@using VL1.Pages.Extensions
+@model VL1.Soft.Areas.Quantity.Pages.Measures.EditModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -7,38 +8,20 @@
 
 <h1>Edit</h1>
 
-<h4>MeasureView</h4>
+<h4>Item</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="MeasureView.Id" />
-            <div class="form-group">
-                <label asp-for="MeasureView.Name" class="control-label"></label>
-                <input asp-for="MeasureView.Name" class="form-control" />
-                <span asp-validation-for="MeasureView.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MeasureView.Code" class="control-label"></label>
-                <input asp-for="MeasureView.Code" class="form-control" />
-                <span asp-validation-for="MeasureView.Code" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MeasureView.Definition" class="control-label"></label>
-                <input asp-for="MeasureView.Definition" class="form-control" />
-                <span asp-validation-for="MeasureView.Definition" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MeasureView.Validfrom" class="control-label"></label>
-                <input asp-for="MeasureView.Validfrom" class="form-control" />
-                <span asp-validation-for="MeasureView.Validfrom" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MeasureView.ValidTo" class="control-label"></label>
-                <input asp-for="MeasureView.ValidTo" class="form-control" />
-                <span asp-validation-for="MeasureView.ValidTo" class="text-danger"></span>
-            </div>
+            <input type="hidden" asp-for="Item.Id" />
+
+            @Html.EditControlsFor(x => x.Item.Code)
+            @Html.EditControlsFor(x => x.Item.Name)
+            @Html.EditControlsFor(x => x.Item.Definition)
+            @Html.EditControlsFor(x => x.Item.ValidFrom)
+            @Html.EditControlsFor(x => x.Item.ValidTo)
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

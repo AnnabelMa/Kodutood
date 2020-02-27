@@ -1,29 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using Facade.Quantity;
-using Soft.Data;
+using VL1.Domain.Quantity;
+using VL1.Pages.Quantity;
 
-namespace VL1.Soft
+namespace VL1.Soft.Areas.Quantity.Pages.Measures
 {
-    public class IndexModel : PageModel
+    public class IndexModel : MeasuresPage
     {
-        private readonly ApplicationDbContext _context;
+        public string SearchString;
+        public IndexModel(IMeasuresRepository r) : base(r) { }
 
-        public IndexModel(ApplicationDbContext context)
+        public async Task OnGetAsync(string sortOrder, string searchString) 
         {
-            _context = context;
+            NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            DateSort = sortOrder == "Date" ? "date_desc" : "Date";
+            db.SortOrder = sortOrder;
+            SearchString = searchString;
+            db.SearchString = SearchString;
+            var l = await db.Get();
+            Items = new List<MeasureView>();
+            foreach (var e in l)  Items.Add(MeasureViewFactory.Create(e));
         }
-
-        public IList<MeasureView> MeasureView { get;set; }
-
-        public async Task OnGetAsync()
-        {
-            MeasureView = await _context.MeasureView.ToListAsync();
-        }
+        public string DateSort { get; set; }
+        public string NameSort { get; set; }
     }
 }

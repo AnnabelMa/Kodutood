@@ -1,37 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using VL1.Domain.Quantity;
+using VL1.Pages.Quantity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using Facade.Quantity;
-using Soft.Data;
 
-namespace VL1.Soft
+namespace VL1.Soft.Areas.Quantity.Pages.Measures
 {
-    public class DeleteModel : PageModel
+    public class DeleteModel : MeasuresPage
     {
-        private readonly ApplicationDbContext _context;
-
-        public DeleteModel(ApplicationDbContext context)
-        {
-            _context = context;
-        }
-
-        [BindProperty]
-        public MeasureView MeasureView { get; set; }
-
+        public DeleteModel(IMeasuresRepository r) : base(r) { }
         public async Task<IActionResult> OnGetAsync(string id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            MeasureView = await _context.MeasureView.FirstOrDefaultAsync(m => m.Id == id);
+            Item = MeasureViewFactory.Create(await db.Get(id));
 
-            if (MeasureView == null)
+            if (Item == null)
             {
                 return NotFound();
             }
@@ -40,20 +24,12 @@ namespace VL1.Soft
 
         public async Task<IActionResult> OnPostAsync(string id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            MeasureView = await _context.MeasureView.FindAsync(id);
-
-            if (MeasureView != null)
-            {
-                _context.MeasureView.Remove(MeasureView);
-                await _context.SaveChangesAsync();
-            }
+            await db.Delete(id);
 
             return RedirectToPage("./Index");
         }
+
     }
 }

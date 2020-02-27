@@ -1,5 +1,6 @@
 ﻿@page
-@model VL1.Soft.DeleteModel
+@using VL1.Pages.Extensions
+@model VL1.Soft.Areas.Quantity.Pages.Measures.DeleteModel
 
 @{
     ViewData["Title"] = "Delete";
@@ -12,40 +13,16 @@
     <h4>MeasureView</h4>
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.MeasureView.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.MeasureView.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.MeasureView.Code)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.MeasureView.Code)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.MeasureView.Definition)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.MeasureView.Definition)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.MeasureView.Validfrom)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.MeasureView.Validfrom)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.MeasureView.ValidTo)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.MeasureView.ValidTo)
-        </dd>
+
+        @Html.DisplayControlsFor(m => m.Item.Code)
+        @Html.DisplayControlsFor(m => m.Item.Name)
+        @Html.DisplayControlsFor(m => m.Item.Definition)
+        @Html.DisplayControlsFor(m => m.Item.ValidFrom)
+        @Html.DisplayControlsFor(m => m.Item.ValidTo)
     </dl>
     
     <form method="post">
-        <input type="hidden" asp-for="MeasureView.Id" />
+        <input type="hidden" asp-for="Item.Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-page="./Index">Back to List</a>
     </form>

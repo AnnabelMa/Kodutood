@@ -1,40 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
+﻿using System.Threading.Tasks;
 using Facade.Quantity;
-using Soft.Data;
+using Microsoft.AspNetCore.Mvc;
+using VL1.Domain.Quantity;
+using VL1.Pages.Quantity;
 
-namespace VL1.Soft
+namespace VL1.Soft.Areas.Quantity.Pages.Measures
 {
-    public class DetailsModel : PageModel
+    public class DetailsModel : MeasuresPage
     {
-        private readonly ApplicationDbContext _context;
-
-        public DetailsModel(ApplicationDbContext context)
-        {
-            _context = context;
-        }
-
-        public MeasureView MeasureView { get; set; }
+        public DetailsModel(IMeasuresRepository r) : base(r) { }
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            MeasureView = await _context.MeasureView.FirstOrDefaultAsync(m => m.Id == id);
+            Item = MeasureViewFactory.Create(await db.Get(id));
 
-            if (MeasureView == null)
-            {
-                return NotFound();
-            }
+            if (Item == null) return NotFound();
             return Page();
         }
+
     }
 }

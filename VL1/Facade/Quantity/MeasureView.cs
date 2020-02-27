@@ -17,7 +17,7 @@ namespace Facade.Quantity
         [DataType(DataType.Date)]
         [DisplayName("Valid from")]
 
-        public  DateTime? Validfrom { get; set; }
+        public  DateTime? ValidFrom { get; set; }
         [DataType(DataType.Date)]
 
         [DisplayName("Valid to")]
