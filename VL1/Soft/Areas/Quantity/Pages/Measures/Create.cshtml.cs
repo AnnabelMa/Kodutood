@@ -1,23 +1,44 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Facade.Quantity;
-using VL1.Domain.Quantity;
-using VL1.Pages.Quantity;
+using Soft.Data;
 
-namespace Soft.Areas.Quantity.Pages.Measures
+namespace VL1.Soft
 {
-    public class CreateModel : MeasuresPage
+    public class CreateModel : PageModel
     {
-        public CreateModel(IMeasuresRepository r) : base(r) { }
-        public IActionResult OnGet() => Page();
+        private readonly ApplicationDbContext _context;
+
+        public CreateModel(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        public IActionResult OnGet()
+        {
+            return Page();
+        }
+
+        [BindProperty]
+        public MeasureView MeasureView { get; set; }
+
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            //kontrollib, kas mudel on õigesti tulnud; kas vastab etteantud nõuetele
-            if (!ModelState.IsValid) return Page();
-            await db.Add(MeasureViewFactory.Create(Item));
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            _context.MeasureView.Add(MeasureView);
+            await _context.SaveChangesAsync();
+
             return RedirectToPage("./Index");
         }
     }

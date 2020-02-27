@@ -63,6 +63,22 @@ namespace VL1.Soft.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MeasureView",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    Code = table.Column<string>(nullable: false),
+                    Definition = table.Column<string>(nullable: true),
+                    Validfrom = table.Column<DateTime>(nullable: true),
+                    ValidTo = table.Column<DateTime>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MeasureView", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -227,6 +243,9 @@ namespace VL1.Soft.Migrations
 
             migrationBuilder.DropTable(
                 name: "Measures");
+
+            migrationBuilder.DropTable(
+                name: "MeasureView");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

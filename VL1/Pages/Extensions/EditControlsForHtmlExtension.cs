@@ -20,15 +20,12 @@ namespace VL1.Pages.Extensions
         {
             return new List<object>
             {
-                new List<object>()
-                {
-                    new HtmlString("<dt class=\"col-sm-2\">"),
-                    htmlHelper.DisplayNameFor(expression),
-                    new HtmlString("</dt>"),
-                    new HtmlString("dd class= \"col-sm-10\">"),
-                    htmlHelper.DisplayNameFor(expression),
-                    new HtmlString("</dd>")
-                }
+                new HtmlString("<dt class=\"col-sm-4\">"),
+                htmlHelper.DisplayNameFor(expression),
+                new HtmlString("</dt>"),
+                new HtmlString("<dd class= \"col-sm-10\">"),
+                htmlHelper.TextBoxFor(expression, new { @class="form-control" }),
+                new HtmlString("</dd>")
             };
         }
     }

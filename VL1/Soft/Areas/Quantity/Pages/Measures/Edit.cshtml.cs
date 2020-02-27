@@ -1,22 +1,41 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Facade.Quantity;
-using VL1.Pages.Quantity;
-using VL1.Domain.Quantity;
+using Soft.Data;
 
-namespace Soft.Areas.Quantity.Pages.Measures
+namespace VL1.Soft
 {
-    public class EditModel : MeasuresPage
+    public class EditModel : PageModel
     {
-        public EditModel(IMeasuresRepository r) : base(r) { }
+        private readonly ApplicationDbContext _context;
 
-        public async Task<IActionResult> OnGetAsync(string id) //otsib id
+        public EditModel(ApplicationDbContext context)
         {
-            if (id == null) return NotFound();
-            Item = MeasureViewFactory.Create(await db.Get(id));
+            _context = context;
+        }
 
-            if (Item == null) return NotFound();
+        [BindProperty]
+        public MeasureView MeasureView { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            MeasureView = await _context.MeasureView.FirstOrDefaultAsync(m => m.Id == id);
+
+            if (MeasureView == null)
+            {
+                return NotFound();
+            }
             return Page();
         }
 
@@ -24,11 +43,35 @@ namespace Soft.Areas.Quantity.Pages.Measures
         // more details see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid) return Page();
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
 
-            await db.Update(MeasureViewFactory.Create(Item));
+            _context.Attach(MeasureView).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!MeasureViewExists(MeasureView.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return RedirectToPage("./Index");
+        }
+
+        private bool MeasureViewExists(string id)
+        {
+            return _context.MeasureView.Any(e => e.Id == id);
         }
     }
 }

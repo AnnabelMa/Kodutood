@@ -1,30 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Facade.Quantity;
-using VL1.Pages.Quantity;
-using VL1.Domain.Quantity;
+using Soft.Data;
 
-namespace Soft.Areas.Quantity.Pages.Measures
+namespace VL1.Soft
 {
-    public class IndexModel : MeasuresPage
+    public class IndexModel : PageModel
     {
-        public IndexModel(IMeasuresRepository r) : base(r) { }
+        private readonly ApplicationDbContext _context;
 
-        public string NameSort { get; private set; }//genereeritud propertyd
-        public string DateSort { get; private set; }
-        public string SearchString;
-
-        public async Task OnGetAsync(string sortOrder, string searchString)
+        public IndexModel(ApplicationDbContext context)
         {
-            NameSort = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            DateSort = sortOrder == "Date" ? "date_desc" : "Date";
-            db.SortOrder = sortOrder;
-            SearchString = searchString;
-            db.SearchString = SearchString;
-            var l = await db.Get();
-            Items = new List<MeasureView>();
+            _context = context;
+        }
 
-            foreach (var e in l) { Items.Add(MeasureViewFactory.Create(e));}
+        public IList<MeasureView> MeasureView { get;set; }
+
+        public async Task OnGetAsync()
+        {
+            MeasureView = await _context.MeasureView.ToListAsync();
         }
     }
 }

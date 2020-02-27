@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using VL1.Infra.Quantity;
+using Facade.Quantity;
 
 namespace Soft.Data
 {
@@ -13,5 +14,6 @@ namespace Soft.Data
             base.OnModelCreating(builder);
             QuantityDbContext.InitializeTables(builder);
         }
+        public DbSet<Facade.Quantity.MeasureView> MeasureView { get; set; }
     }
 }
