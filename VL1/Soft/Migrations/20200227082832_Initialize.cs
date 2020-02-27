@@ -51,7 +51,7 @@ namespace VL1.Soft.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    Validfrom = table.Column<DateTime>(nullable: true),
+                    ValidFrom = table.Column<DateTime>(nullable: true),
                     ValidTo = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Code = table.Column<string>(nullable: true),
@@ -70,7 +70,7 @@ namespace VL1.Soft.Migrations
                     Name = table.Column<string>(nullable: false),
                     Code = table.Column<string>(nullable: false),
                     Definition = table.Column<string>(nullable: true),
-                    Validfrom = table.Column<DateTime>(nullable: true),
+                    ValidFrom = table.Column<DateTime>(nullable: true),
                     ValidTo = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
