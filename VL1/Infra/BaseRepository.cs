@@ -1,0 +1,34 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using VL1.Domain.Common;
+
+namespace VL1.Infra
+{
+    public class BaseRepository<T> : ICrudMethods<T>
+    {
+
+        public Task<List<T>> Get()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<T> Get(string id)
+        {
+            throw new NotImplementedException();
+        }
+        public Task Delete(string id)
+        {
+            throw new NotImplementedException();
+        }
+        public Task Add(T obj)
+        {
+            throw new NotImplementedException();
+        }
+        public Task Update(T obj)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
