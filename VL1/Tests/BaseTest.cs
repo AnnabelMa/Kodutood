@@ -26,12 +26,17 @@ namespace Tests
         //saan kontrollida, kas on sama väärtus
         protected static void isNullableProperty<T>(Func<T> get, Action<T> set) //where T: Nullable
         {
-            var d = (T) GetRandom.Value(typeof(T));
+            isProperty(get, set);
+            set(default); //ehk d = default(T); set(d)
+            Assert.IsNull(get());
+        }
+
+        protected static void isProperty<T>(Func<T> get, Action<T> set) //kontrollib, kas saan võtta juhusliku värtuse ja sellega testida
+        {
+            var d = (T)GetRandom.Value(typeof(T));
             Assert.AreNotEqual(d, get());
             set(d);
             Assert.AreEqual(d, get());
-            //set(null);
-            //Assert.IsNull(get());
         }
     }
 }
