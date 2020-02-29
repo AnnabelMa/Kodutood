@@ -29,17 +29,14 @@ namespace VL1.Infra
         {
             if (id is null) return new TDomain();
 
-            var d = await dbSet.FirstOrDefaultAsync(m => isThisRecord(m, id));
+            var d = await getData(id);
             var obj = new TDomain { Data = d };
 
             return obj;
         }
 
-        protected virtual bool isThisRecord(TData d, string id)
-        {
-            if (d is UniqueEntityData data) return data.Id == id;
-            return true;
-        }
+        //
+        protected abstract Task<TData> getData(string id);
         public async Task Delete(string id)
         {
             if (id is null) return;
