@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Interface Name="VL1.Domain.Common.IRepository&lt;T&gt;">
-    <Position X="3.5" Y="4.25" Width="1.75" />
+    <Position X="1.75" Y="4.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Common\IRepository.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="VL1.Domain.Quantity.IMeasuresRepository">
-    <Position X="6.5" Y="4.5" Width="1.5" />
+    <Position X="5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Quantity\IMeasuresRepository.cs</FileName>
@@ -22,23 +22,23 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="VL1.Domain.Common.ISorting">
-    <Position X="3.5" Y="1" Width="1.5" />
+    <Position X="2.75" Y="1" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Common\ISorting.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="VL1.Domain.Common.ISearching">
-    <Position X="5.75" Y="1.25" Width="1.5" />
+    <Position X="5" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
       <FileName>Common\ISearching.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="VL1.Domain.Common.IPaging">
-    <Position X="8" Y="1" Width="1.5" />
+    <Position X="7" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAUAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAUAAAAAAAAAAAAEAAAAAA=</HashCode>
       <FileName>Common\IPaging.cs</FileName>
     </TypeIdentifier>
   </Interface>

@@ -4,12 +4,15 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>VL1.Domain</AssemblyName>
     <RootNamespace>VL1.Domain</RootNamespace>
+    <ApplicationManifest>AssemblyInfo.cs</ApplicationManifest>
+    <NeutralLanguage />
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AngleSharp" Version="0.13.0" />
+    <PackageReference Include="AngleSharp" Version="0.14.0-alpha-789" />
     <PackageReference Include="FluentNHibernate" Version="2.1.2" />
     <PackageReference Include="Microsoft.CrmSdk.CoreAssemblies" Version="9.0.2.23" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.2" />
     <PackageReference Include="Microsoft.Graph" Version="1.21.0" />
   </ItemGroup>
 

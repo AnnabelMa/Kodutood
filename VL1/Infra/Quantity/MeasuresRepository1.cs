@@ -7,17 +7,11 @@ using VL1.Data.Quantity;
 
 namespace VL1.Infra.Quantity
 {
-    public class MeasuresRepository :PaginatedRepository<Measure>, IMeasuresRepository
+    public class MeasuresRepository : PaginatedRepository<Measure, MeasureData>, IMeasuresRepository
     {
-        protected internal QuantityDbContext db;
-        
-        public int PageSize { get; set; } = 1;
-       
-        public MeasuresRepository(QuantityDbContext c)
-        {
-            db = c;
-        }
-        public async Task<List<Measure>> Get()
+        public MeasuresRepository(QuantityDbContext c) : base(c, c.Measures) {}
+
+        public override async Task<List<Measure>> Get()
         {
             var list = await createPaged(createFiltered(CreateSorted()));//SELECT lause paneb kirja
             HasNextPage = list.HasNextPage;
@@ -27,13 +21,11 @@ namespace VL1.Infra.Quantity
             //Filtered teeb select lausesse "väär" osa
             return list.Select(e => new Measure(e)).ToList(); //foreach tsükkel algupäraselt
         }
-
         private async Task<PaginatedList<MeasureData>>createPaged(IQueryable<MeasureData> dataSet)
         {
              return await PaginatedList<MeasureData>.CreateAsync(
                 dataSet, PageIndex, PageSize);
         }
-
         private IQueryable<MeasureData> createFiltered(IQueryable<MeasureData> set)
         {
             if (string.IsNullOrEmpty(SearchString)) return set;
@@ -47,7 +39,7 @@ namespace VL1.Infra.Quantity
 
         private IQueryable<MeasureData> CreateSorted()
         {
-            IQueryable<MeasureData> measures = from s in db.Measures select s;
+            IQueryable<MeasureData> measures = from s in dbSet select s;
             switch (SortOrder)
             {
                 case "name_desc":
@@ -64,43 +56,6 @@ namespace VL1.Infra.Quantity
                     break;
             }
             return measures.AsNoTracking();//teeb päringu
-        }
-        public async Task<Measure> Get(string id)
-        {
-            var d = await db.Measures.FirstOrDefaultAsync(m => m.Id == id);//paneb SELECT lause kirja SQLis
-            return new Measure(d);
-        }
-        public async Task Delete(string id)
-        {
-            var d = await db.Measures.FindAsync(id);
-
-                if (d is null) return;
-            
-                db.Measures.Remove(d);
-                await db.SaveChangesAsync();
-        }
-        public async Task Add(Measure obj)
-        {
-            db.Measures.Add(obj.Data);
-
-            await db.SaveChangesAsync();
-        }
-        public async  Task Update(Measure obj)
-        {
-            var d = await db.Measures.FirstOrDefaultAsync(x => x.Id == obj.Data.Id);
-            d.Code = obj.Data.Code;
-            d.Name = obj.Data.Name;
-            d.Definition = obj.Data.Definition;
-            d.ValidFrom = obj.Data.ValidFrom;
-            d.ValidTo = obj.Data.ValidTo;
-            db.Measures.Update(d);
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-            }
         }
     }
 }

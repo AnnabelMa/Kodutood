@@ -7,8 +7,8 @@ namespace VL1.Domain.Quantity
     public class Measure : Entity<MeasureData>
     //ülesanne on vedada andmeid andmebaasi ja kasutajaliidese "kihi" vahel
     {
-        private MeasureData d;
-
+        public Measure() : this(null) { }
+        //private MeasureData d;
         public Measure(MeasureData data) : base(data) { }
 
     }

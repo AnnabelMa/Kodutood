@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.EntityFrameworkCore;
+using VL1.Data.Common;
 using VL1.Domain.Common;
 
 namespace VL1.Infra
 {
-    public class SortedRepository<T> : BaseRepository<T>, ISorting
+    public abstract class SortedRepository<TDomain, TData> : BaseRepository<TDomain, TData>, ISorting
+        where TData : PeriodData, new()
+        where TDomain : Entity<TData>, new()
     {
         public string SortOrder { get; set; }
+
+        protected SortedRepository(DbContext c, DbSet<TData> s) : base(c, s)
+        {
+        }
     }
 }

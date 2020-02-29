@@ -1,34 +1,72 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
+using VL1.Data.Common;
 using VL1.Domain.Common;
 
 namespace VL1.Infra
 {
-    public class BaseRepository<T> : ICrudMethods<T>
+    public abstract class BaseRepository<TDomain, TData> : ICrudMethods<TDomain> 
+        where TData: PeriodData, new()
+        where TDomain : Entity<TData>, new()
     {
+        protected internal DbContext db;
 
-        public Task<List<T>> Get()
+        protected internal DbSet<TData> dbSet;
+
+        protected BaseRepository(DbContext c, DbSet<TData> s)
+        {
+            db = c;
+            dbSet = s;
+        }
+        public virtual async Task<List<TDomain>> Get()
         {
             throw new NotImplementedException();
+        }
+                    
+        public async Task<TDomain> Get(string id)
+        {
+            if (id is null) return new TDomain();
+
+            var d = await dbSet.FirstOrDefaultAsync(m => isThisRecord(m, id));
+            var obj = new TDomain { Data = d };
+
+            return obj;
         }
 
-        public Task<T> Get(string id)
+        protected virtual bool isThisRecord(TData d, string id)
         {
-            throw new NotImplementedException();
+            if (d is UniqueEntityData data) return data.Id == id;
+            return true;
         }
-        public Task Delete(string id)
+        public async Task Delete(string id)
         {
-            throw new NotImplementedException();
+            if (id is null) return;
+
+            var v = await dbSet.FindAsync(id);
+
+            if (v is null) return;
+
+            dbSet.Remove(v);
+            await db.SaveChangesAsync();
         }
-        public Task Add(T obj)
+        public async Task Add(TDomain obj)
         {
-            throw new NotImplementedException();
+            if (obj? .Data is null) return;
+
+            dbSet.Add(obj.Data);
+
+            await db.SaveChangesAsync();
         }
-        public Task Update(T obj)
+        public async Task Update(TDomain obj)
         {
-            throw new NotImplementedException();
+            db.Attach(obj.Data).State = EntityState.Modified;
+
+            try{ await db.SaveChangesAsync();}
+            catch (DbUpdateConcurrencyException)
+            {
+            }
         }
     }
 }

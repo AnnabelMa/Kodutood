@@ -3,39 +3,39 @@
   <Class Name="VL1.Infra.Quantity.MeasuresRepository">
     <Position X="0.5" Y="1.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAYAAAAAAQAQAAhAAAAAAIAAAAEAAAAAAAAAEAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAQAAAAhAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Quantity\MeasuresRepository1.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="VL1.Infra.BaseRepository&lt;T&gt;">
+  <Class Name="VL1.Infra.BaseRepository&lt;TDomain, TData&gt;">
     <Position X="5.5" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAYAAAAAAAAAAABAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAYAAAAAAAAQAABAAAAAAAAAAAEAAAAACAAAAAAAAAA=</HashCode>
       <FileName>BaseRepository.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="VL1.Infra.SortedRepository&lt;T&gt;">
-    <Position X="5.75" Y="4.5" Width="1.5" />
+  <Class Name="VL1.Infra.SortedRepository&lt;TDomain, TData&gt;">
+    <Position X="5.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>SortedRepository.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="VL1.Infra.FilteredRepository&lt;T&gt;">
-    <Position X="3.5" Y="4.5" Width="1.5" />
+  <Class Name="VL1.Infra.FilteredRepository&lt;TDomain, TData&gt;">
+    <Position X="3" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
       <FileName>FilteredRepository.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="VL1.Infra.PaginatedRepository&lt;T&gt;">
+  <Class Name="VL1.Infra.PaginatedRepository&lt;TDomain, TData&gt;">
     <Position X="3" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAUAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAUAAAAAAAAAAAAEAAAAAA=</HashCode>
       <FileName>PaginatedRepository.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
