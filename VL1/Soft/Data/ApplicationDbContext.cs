@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using VL1.Infra.Quantity;
-using Facade.Quantity;
 
-namespace Soft.Data
+namespace VL1.Soft.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {

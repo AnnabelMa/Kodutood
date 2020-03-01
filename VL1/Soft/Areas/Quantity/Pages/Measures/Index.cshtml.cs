@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Facade.Quantity;
 using VL1.Domain.Quantity;
+using VL1.Facade.Quantity;
 using VL1.Pages.Quantity;
 
 namespace VL1.Soft.Areas.Quantity.Pages.Measures
@@ -14,7 +14,12 @@ namespace VL1.Soft.Areas.Quantity.Pages.Measures
         {
             CurrentSort = sortOrder;
             NameSort = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            DateSort = sortOrder == "Date" ? "date_desc" : "Date";
+            IdSort = sortOrder == "Id" ? "Id_desc" : "Id";
+            CodeSort = sortOrder == "Code" ? "Code_desc" : "Code";
+            DefinitionSort = sortOrder == "Definition" ? "Definition_desc" : "Definition";
+            ValidFromSort = sortOrder == "ValidFrom" ? "ValidFrom_desc" : "ValidFrom";
+            ValidToSort = sortOrder == "ValidTo" ? "ValidTo_desc" : "ValidTo";
+
             if (searchString != null)
             {
                 PageIndex = 1;
@@ -37,8 +42,13 @@ namespace VL1.Soft.Areas.Quantity.Pages.Measures
             HasPreviousPage = db.HasPreviousPage;
         }
         public string CurrentSort { get; set; }
-        public string DateSort { get; set; }
+        public string ValidFromSort { get; set; }
         public string NameSort { get; set; }
+        public string IdSort { get; set; }
+        public string CodeSort { get; set; }
+        public string DefinitionSort { get; set; }
+        public string ValidToSort { get; set; }
+
 
         public bool HasPreviousPage { get; set; }
         public bool HasNextPage { get; set; }

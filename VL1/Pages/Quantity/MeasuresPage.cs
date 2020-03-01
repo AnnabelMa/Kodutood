@@ -1,8 +1,8 @@
 ﻿using VL1.Domain.Quantity;
-using Facade.Quantity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using VL1.Facade.Quantity;
 
 namespace VL1.Pages.Quantity
 {

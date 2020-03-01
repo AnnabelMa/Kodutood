@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
-namespace Soft.Pages
+namespace VL1.Soft.Pages
 {
     public class PrivacyModel : PageModel
     {

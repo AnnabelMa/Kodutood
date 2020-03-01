@@ -1,6 +1,7 @@
 ﻿@{
     Layout = "_Layout";
     ViewData["Title"] = Model.PageTitle;
+    var itemId = Model.ItemId;
 }
 
 <p>
@@ -24,5 +25,7 @@
 <div>
     <a asp-page=".Index">Back to List</a>
 </div>
-@section Scripts
-{@{await Html.RenderPartialAsync("_ValidationScriptsPartial")}; }
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

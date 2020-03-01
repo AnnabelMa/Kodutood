@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using VL1.Data.Quantity;
 using VL1.Domain.Quantity;
-using VL1.Data.Common;
-using VL1.Data.Quantity;
 
-namespace Facade.Quantity
+namespace VL1.Facade.Quantity
 {
     //static klassis pole asjad päritavad!
     public static class MeasureViewFactory

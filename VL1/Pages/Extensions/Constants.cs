@@ -1,0 +1,48 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace VL1.Pages.Extensions
+{
+    public static class Constants
+    {
+        public const string Unspecified = "unspecified";
+        public const string CreateNewLinkTitle = "Create New";
+        public const string SelectLinkTitle = "Select";
+        public const string EditLinkTitle = "Edit";
+        public const string DetailsLinkTitle = "Details";
+        public const string DeleteLinkTitle = "Delete";
+        public const string PartiesMenuTitle = "Parties";
+        public const string DataMenuTitle = "Data";
+
+        public const string CountriesPageTitle = "Countries";
+        public const string MeasuresPageTitle = "Measures";
+        public const string OrdersPageTitle = "Orders"; 
+        public const string PaymentsPageTitle = "Payments"; 
+        public const string InventoryPageTitle = "Inventory";
+        public const string CataloguesPageTitle = "Catalogues";
+        public const string ProductsPageTitle = "Products";
+        public const string ProcessesPageTitle = "Processes";
+        public const string ProdceduresPageTitle = "Prodcedures";
+        public const string ProductTypesPageTitle = "Product Types";
+        public const string RulesPagePageTitle = "Rules";
+        public const string RuleSetsPagePageTitle = "Rule Sets"; 
+        public const string RuleContextsPageTitle = "Rule Contexts";
+        public const string RuleOverridesPageTitle = "Rule Overrides";
+        public const string PartiesPageTitle = "Parties";
+        public const string RolesPageTitle = "Roles"; 
+        public const string RelationsPageTitle = "Relations";
+        public const string PartyContactsPageTitle = "Party Contacts";
+        public const string PartyTypesPageTitle = "Party Types";
+        public const string RoleTypesPageTitle = "Role Types";
+        public const string RelationTypesPageTitle = "Relation Types";
+        public const string SystemOfUnitsPageTitle = "System Of Units";
+        public const string UnitsPageTitle = "Units";
+        public const string CurrenciesPageTitle = "Currencies";
+        public const string RateTypesPageTitle = "Rate Types";
+        public const string RatesPageTitle = "Day Rates";
+        public const string PaymentMethodsPageTitle = "Payment Methods";
+        public const string CalculatorPageTitle = "Calculator";
+
+    }
+}
