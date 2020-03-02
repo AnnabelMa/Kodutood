@@ -10,10 +10,12 @@ namespace VL1.Soft.Areas.Quantity.Pages.Measures
     {
         public IndexModel(IMeasuresRepository r) : base(r) { }
 
-        public async Task OnGetAsync(string sortOrder, string currentFilter, string searchString, int? pageIndex) 
+        public async Task OnGetAsync(string sortOrder, string currentFilter, 
+            string searchString, int? pageIndex)
         {
+            sortOrder = string.IsNullOrEmpty(sortOrder) ? "Name_desc" : sortOrder;
             CurrentSort = sortOrder;
-            NameSort = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            NameSort = sortOrder =="Name" ? "Name_desc" : "Name";
             IdSort = sortOrder == "Id" ? "Id_desc" : "Id";
             CodeSort = sortOrder == "Code" ? "Code_desc" : "Code";
             DefinitionSort = sortOrder == "Definition" ? "Definition_desc" : "Definition";
