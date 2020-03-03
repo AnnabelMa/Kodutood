@@ -49,7 +49,7 @@ namespace VL1.Infra
             var name = getName();
             return typeof(TData).GetProperty(name);
         }
-        private string getName() //sortOrderist võtab pealt kõik characterid, mis on DescendingStringis
+        internal string getName() //sortOrderist võtab pealt kõik characterid, mis on DescendingStringis
         {
             if (string.IsNullOrEmpty(SortOrder)) return string.Empty;
             var idx = SortOrder.IndexOf(DescendingString, StringComparison.Ordinal);
@@ -57,8 +57,10 @@ namespace VL1.Infra
             return SortOrder;
         }
         //kui on DescendingString, tuleb sorteerida õigetpidi, kui pole, siis teistpidi.
+        
         internal IQueryable<TData> setOrderBy(IQueryable<TData> data, Expression<Func<TData, object>> e) 
             => isDescending() ? data.OrderByDescending(e) : data.OrderBy(e);
+        
         internal bool isDescending() => SortOrder.EndsWith(DescendingString);
     }
 }

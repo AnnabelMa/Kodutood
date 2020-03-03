@@ -1,8 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using VL1.Aids;
+﻿using System;
+using Abc.Aids;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Tests
+namespace VL1.Tests
 {
     public abstract class BaseTest<TClass, TBaseClass>
     {

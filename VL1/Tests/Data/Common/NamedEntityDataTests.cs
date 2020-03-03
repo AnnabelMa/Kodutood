@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VL1.Data.Common;
 
-namespace Tests.Data.Common
+namespace VL1.Tests.Data.Common
 {
     [TestClass]
     public class NamedEntityDataTests : AbstractClassTest<NamedEntityData, UniqueEntityData>
