@@ -1,5 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Threading.Tasks;
 using Abc.Aids;
+using Antlr.Runtime.Misc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VL1.Data.Quantity;
@@ -22,9 +26,8 @@ namespace VL1.Tests.Infra
             protected override Task<MeasureData> getData(string id)
             {
                 throw new System.NotImplementedException();
-            }
+            } 
         }
-
         [TestInitialize]
         public override void TestInitialize()
         {
@@ -35,59 +38,103 @@ namespace VL1.Tests.Infra
 
         [TestMethod]
         public void SortOrderTest()
-        {
-            Assert.Inconclusive();
+        { 
+            isNullableProperty(()=>obj.SortOrder, x=> obj.SortOrder=x);
         }
 
         [TestMethod]
         public void DescendingStringTest()
         {
-            Assert.Inconclusive();
+            var propertyName = GetMember.Name<testClass>(x => x.DescendingString);
+            isReadOnlyProperty(obj, propertyName, "_desc");
         }
-
         [TestMethod]
-        public void setSortingTest()
+        public void SetSortingTest()
         {
             Assert.Inconclusive();
         }
 
         [TestMethod]
-        public void createExpressionTest()
+        public void CreateExpressionTest()
         {
             Assert.Inconclusive();
         }
 
         [TestMethod]
-        public void lambdaExpressionTest()
+        public void LambdaExpressionTest()
         {
-            Assert.Inconclusive();
+            var name = GetMember.Name<MeasureData>(x => x.ValidFrom);
+            var property = typeof(MeasureData).GetProperty(name);
+            var lambda = obj.lambdaExpression(property);
+            Assert.IsNull(lambda);
+            Assert.IsInstanceOfType(lambda, typeof(Expression<Antlr.Runtime.Misc.Func<MeasureData, object>>));
+            Assert.IsTrue(lambda.ToString().Contains(name));
         }
 
         [TestMethod]
-        public void findPropertyTest()
+        public void FindPropertyTest()
         {
-            Assert.Inconclusive();
+            string s;
+            void test(PropertyInfo expected, string sortOrder)
+            {
+                obj.SortOrder = sortOrder;
+                Assert.AreEqual(expected, obj.findProperty());
+            }
+            test(null, GetRandom.String());
+            test(null, null);
+            test(null, string.Empty);
+            test(typeof(MeasureData).GetProperty(s = GetMember.Name<MeasureData>(x => x.Name)), s);
+            test(typeof(MeasureData).GetProperty(s = GetMember.Name<MeasureData>(x => x.ValidFrom)), s);
+            test(typeof(MeasureData).GetProperty(s = GetMember.Name<MeasureData>(x => x.ValidTo)), s);
+            test(typeof(MeasureData).GetProperty(s = GetMember.Name<MeasureData>(x => x.Definition)), s);
+            test(typeof(MeasureData).GetProperty(s = GetMember.Name<MeasureData>(x => x.Code)), s);
+            test(typeof(MeasureData).GetProperty(s = GetMember.Name<MeasureData>(x => x.Id)), s);
+            test(typeof(MeasureData).GetProperty(s = GetMember.Name<MeasureData>(x => x.Name)),
+                s + obj.DescendingString);
+            test(typeof(MeasureData).GetProperty(s = GetMember.Name<MeasureData>(x => x.ValidFrom)),
+                s + obj.DescendingString);
+            test(typeof(MeasureData).GetProperty(s = GetMember.Name<MeasureData>(x => x.ValidTo)),
+                s + obj.DescendingString);
+            test(typeof(MeasureData).GetProperty(s = GetMember.Name<MeasureData>(x => x.Definition)),
+                s + obj.DescendingString);
+            test(typeof(MeasureData).GetProperty(s = GetMember.Name<MeasureData>(x => x.Code)),
+                s + obj.DescendingString);
+            test(typeof(MeasureData).GetProperty(s = GetMember.Name<MeasureData>(x => x.Id)),
+                s + obj.DescendingString);
         }
 
         [TestMethod]
-        public void getNameTest()
+        public void GetNameTest()
+        {
+            string s;
+            void test(string expected, string sortOrder)
+            {
+                obj.SortOrder = sortOrder;
+                Assert.AreEqual(expected, obj.getName());
+            }
+            test(s=GetRandom.String(), s);
+            test(s=GetRandom.String(), s+obj.DescendingString);
+            test(string.Empty, string.Empty);
+            test(string.Empty, null);
+        }
+        [TestMethod]
+        public void SetOrderByTest()
         {
             Assert.Inconclusive();
         }
-
         [TestMethod]
-        public void setOrderByTest()
+        public void IsDescendingTest()
         {
-            Assert.Inconclusive();
-        }
-
-        [TestMethod]
-        public void isDescendingTest()
-        {
-            obj.SortOrder = GetRandom.String();
-            Assert.IsFalse(obj.isDescending());
-            obj.SortOrder = obj.DescendingString;
-            Assert.IsTrue(obj.isDescending());
+            void test(string sortOrder, bool expected)
+            {
+                obj.SortOrder = sortOrder;
+                var actual = obj.isDescending();
+                Assert.AreEqual(expected, actual);
+            }
+            test(GetRandom.String(), false);
+            test(GetRandom.String() + obj.DescendingString, true);
+            test(string.Empty, false);
+            test(null, false);
         }
     }
 }

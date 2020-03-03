@@ -61,6 +61,6 @@ namespace VL1.Infra
         internal IQueryable<TData> setOrderBy(IQueryable<TData> data, Expression<Func<TData, object>> e) 
             => isDescending() ? data.OrderByDescending(e) : data.OrderBy(e);
         
-        internal bool isDescending() => SortOrder.EndsWith(DescendingString);
+        internal bool isDescending() => !string.IsNullOrEmpty(SortOrder) && SortOrder.EndsWith(DescendingString);
     }
 }
