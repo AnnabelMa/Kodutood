@@ -22,9 +22,10 @@ namespace VL1.Tests.Infra
             public testClass(DbContext c, DbSet<MeasureData> s) : base(c, s)
             {
             }
-            protected override Task<MeasureData> getData(string id)
+            protected override async  Task<MeasureData> getData(string id)
             {
-                throw new System.NotImplementedException();
+                await Task.CompletedTask;
+                return new MeasureData();
             } 
         }
         [TestInitialize]
@@ -51,7 +52,31 @@ namespace VL1.Tests.Infra
         [TestMethod]
         public void SetSortingTest()
         {
-            Assert.Inconclusive();
+            void test(IQueryable<MeasureData> d,string sortOrder)
+            {
+                obj.SortOrder = sortOrder + obj.DescendingString;
+                var set = obj.setSorting(d);
+                Assert.IsNotNull(set);
+                Assert.AreNotEqual(d, set);
+                Assert.IsTrue(set.Expression.ToString()
+                    .Contains($"VL1.Data.Quantity.MeasureData]).OrderByDescending(Param_0 => Convert(Param_0.{sortOrder}, Object)"));
+                obj.SortOrder = sortOrder;
+                set = obj.setSorting(d);
+                Assert.IsNotNull(set);
+                Assert.AreNotEqual(d, set);
+                Assert.IsTrue(set.Expression.ToString().
+                    Contains($"VL1.Data.Quantity.MeasureData]).OrderBy(Param_0 => Convert(Param_0.{sortOrder}, Object)"));
+            }
+            Assert.IsNull(obj.setSorting(null));
+            IQueryable<MeasureData> data = obj.dbSet;
+            obj.SortOrder = null;
+            Assert.AreEqual(data, obj.setSorting(data));
+            test(data, GetMember.Name<MeasureData>(x => x.Definition));
+            test(data, GetMember.Name<MeasureData>(x => x.Name));
+            test(data, GetMember.Name<MeasureData>(x => x.Code));
+            test(data, GetMember.Name<MeasureData>(x => x.Id));
+            test(data, GetMember.Name<MeasureData>(x => x.ValidFrom));
+            test(data, GetMember.Name<MeasureData>(x => x.ValidTo));
         }
 
         [TestMethod]
