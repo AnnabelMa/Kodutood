@@ -20,7 +20,9 @@ namespace VL1.Infra
         protected internal IQueryable<TData> setSorting(IQueryable<TData> data)
         {
             var expression = createExpression();
-            return expression is null ? data : setOrderBy(data, expression);
+            
+            var r = expression is null ? data : setOrderBy(data, expression);
+            return r;
         }
 
         internal Expression<Func<TData, object>> createExpression()

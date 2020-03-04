@@ -155,6 +155,7 @@ namespace VL1.Tests.Infra
         {
             void test(IQueryable<MeasureData> d, Expression<Func<MeasureData, object>> e, string expected )
             {
+                obj.SortOrder = GetRandom.String() + obj.DescendingString;
                 var set = obj.setOrderBy(d, e);
                 Assert.IsNotNull(set);
                 Assert.AreNotEqual(d, set); //data ja set ei ole võrdsed
@@ -164,18 +165,18 @@ namespace VL1.Tests.Infra
                 set = obj.setOrderBy(d,e);
                 Assert.IsNotNull(set);
                 Assert.AreNotEqual(d, set); //data ja set ei ole võrdsed
-                Assert.IsTrue(set.Expression.ToString().Contains($"VL1.Data.Quantity.MeasureData]).OrderBy({expected})"));
+                Assert.IsTrue(set.Expression.ToString().
+                    Contains($"VL1.Data.Quantity.MeasureData]).OrderBy({expected})"));
             }
             Assert.IsNull(obj.setOrderBy(null, null));
             IQueryable<MeasureData> data = obj.dbSet;
             Assert.AreEqual(data, obj.setOrderBy(data, null));
-            obj.SortOrder = GetRandom.String() + obj.DescendingString;
             test(data, x => x.Definition, "x => x.Definition");
             test(data, x => x.Id, "x => x.Id");
             test(data, x => x.Name, "x => x.Name");
             test(data, x => x.Code, "x => x.Code");
-            test(data, x => x.ValidFrom, "x => x.ValidFrom");
-            test(data, x => x.ValidTo, "x => x.ValidTo");
+            test(data, x => x.ValidFrom, "x => Convert(x.ValidFrom, Object)");
+            test(data, x => x.ValidTo, "x => Convert(x.ValidTo, Object)");
         }
         [TestMethod]
         public void IsDescendingTest()
