@@ -31,7 +31,8 @@ namespace VL1.Tests.Infra
         public override void TestInitialize()
         {
             base.TestInitialize();
-            var c = new QuantityDbContext(new DbContextOptions<QuantityDbContext>());
+            var options = new DbContextOptionsBuilder<QuantityDbContext>().UseInMemoryDatabase("TestDb").Options;
+            var c = new QuantityDbContext(options);
             obj = new testClass(c, c.Measures);
         }
 
@@ -152,17 +153,33 @@ namespace VL1.Tests.Infra
         [TestMethod]
         public void SetOrderByTest()
         {
-            Expression<Func<MeasureData, object>> expression = measureData => measureData.ToString();
+            void test(IQueryable<MeasureData> d, Expression<Func<MeasureData, object>> e, string expected )
+            {
+                var set = obj.setOrderBy(d, e);
+                Assert.IsNotNull(set);
+                Assert.AreNotEqual(d, set); //data ja set ei ole võrdsed
+                Assert.IsTrue(set.Expression.ToString()
+                    .Contains($"VL1.Data.Quantity.MeasureData]).OrderByDescending({expected})"));
+                obj.SortOrder = GetRandom.String();
+                set = obj.setOrderBy(d,e);
+                Assert.IsNotNull(set);
+                Assert.AreNotEqual(d, set); //data ja set ei ole võrdsed
+                Assert.IsTrue(set.Expression.ToString().Contains($"VL1.Data.Quantity.MeasureData]).OrderBy({expected})"));
+            }
             Assert.IsNull(obj.setOrderBy(null, null));
             IQueryable<MeasureData> data = obj.dbSet;
             Assert.AreEqual(data, obj.setOrderBy(data, null));
-            Assert.AreEqual(data, obj.setOrderBy(data, expression));
-            var data1 = obj.setOrderBy(data, x => x.Id);
-            Assert.AreEqual(data, data1);
+            obj.SortOrder = GetRandom.String() + obj.DescendingString;
+            test(data, x => x.Definition, "x => x.Definition");
+            test(data, x => x.Id, "x => x.Id");
+            test(data, x => x.Name, "x => x.Name");
+            test(data, x => x.Code, "x => x.Code");
+            test(data, x => x.ValidFrom, "x => x.ValidFrom");
+            test(data, x => x.ValidTo, "x => x.ValidTo");
         }
         [TestMethod]
         public void IsDescendingTest()
-        {
+        { 
             void test(string sortOrder, bool expected)
             {
                 obj.SortOrder = sortOrder;
