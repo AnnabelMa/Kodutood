@@ -20,15 +20,13 @@ namespace VL1.Infra
         protected internal IQueryable<TData> setSorting(IQueryable<TData> data)
         {
             var expression = createExpression();
-            if (expression is null) return data;
-            return setOrderBy(data, expression);
+            return expression is null ? data : setOrderBy(data, expression);
         }
 
         internal Expression<Func<TData, object>> createExpression()
         {
             var property = findProperty();
-            if (property is null) return null;
-            return lambdaExpression(property);
+            return property is null ? null : lambdaExpression(property);
         }
 
         internal Expression<Func<TData, object>> lambdaExpression(PropertyInfo p)
@@ -43,7 +41,6 @@ namespace VL1.Infra
             var body = Expression.Convert(property, typeof(object));
             return Expression.Lambda<Func<TData, object>>(body, param);
         }
-
         internal PropertyInfo findProperty()
         {
             var name = getName();
@@ -53,14 +50,18 @@ namespace VL1.Infra
         {
             if (string.IsNullOrEmpty(SortOrder)) return string.Empty;
             var idx = SortOrder.IndexOf(DescendingString, StringComparison.Ordinal);
-            if (idx > 0) return SortOrder.Remove(idx);
-            return SortOrder;
+            return idx > 0 ? SortOrder.Remove(idx) : SortOrder;
         }
         //kui on DescendingString, tuleb sorteerida õigetpidi, kui pole, siis teistpidi.
-        
-        internal IQueryable<TData> setOrderBy(IQueryable<TData> data, Expression<Func<TData, object>> e) 
-            => isDescending() ? data.OrderByDescending(e) : data.OrderBy(e);
-        
+
+        internal IQueryable<TData> setOrderBy(IQueryable<TData> data, Expression<Func<TData, object>> e)
+        {
+            if (data is null) return null;
+            if (e is null) return data;
+            try { return isDescending() ? data.OrderByDescending(e) : data.OrderBy(e); }
+            catch { return data;}
+        }
+
         internal bool isDescending() => !string.IsNullOrEmpty(SortOrder) && SortOrder.EndsWith(DescendingString);
     }
 }
