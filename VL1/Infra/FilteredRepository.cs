@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using VL1.Data.Common;
@@ -13,8 +14,18 @@ namespace VL1.Infra
     {
         public string SearchString { get ; set; }
 
-        protected FilteredRepository(DbContext c, DbSet<TData> s) : base(c, s)
+        protected FilteredRepository(DbContext c, DbSet<TData> s) : base(c, s) { }
+
+        protected internal override IQueryable<TData> createSqlQuery()
         {
+            var query= base.createSqlQuery();
+            query = addFiltering(query);
+            return query;
+        }
+
+        protected internal virtual IQueryable<TData> addFiltering(IQueryable<TData> query)
+        {
+            return query;
         }
     }
 }

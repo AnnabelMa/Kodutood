@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using NHibernate.Linq;
 using VL1.Data.Common;
 using VL1.Domain.Common;
 
@@ -22,9 +23,25 @@ namespace VL1.Infra
         }
         public virtual async Task<List<TDomain>> Get()
         {
-            throw new NotImplementedException();
+            var query = createSqlQuery();//teen Sgl query
+            var set = await runSqlQueryAsync(query);//küsin andmebaasist andmeid vastavalt queryle, mis tegin
+
+            return toDomainObjectsList(set);//andmebaasists saadud listi teisendan vajalikuks listiks
         }
-                    
+
+        internal List<TDomain> toDomainObjectsList(List<TData> set) => set.Select(toDomainObject).ToList();
+
+        protected internal abstract TDomain toDomainObject(TData periodData);
+
+        internal async Task<List<TData>> runSqlQueryAsync(IQueryable<TData> query) =>
+            await query.AsNoTracking().ToListAsync();
+      
+        protected internal virtual IQueryable<TData> createSqlQuery()
+        {
+            var query = from s in dbSet select s;
+            return query;
+        }
+
         public async Task<TDomain> Get(string id)
         {
             if (id is null) return new TDomain();
@@ -35,7 +52,6 @@ namespace VL1.Infra
             return obj;
         }
 
-        //
         protected abstract Task<TData> getData(string id);
         public async Task Delete(string id)
         {

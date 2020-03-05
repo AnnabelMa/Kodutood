@@ -15,21 +15,21 @@
     </TypeIdentifier>
   </Class>
   <Class Name="VL1.Data.Common.NamedEntityData">
-    <Position X="3" Y="1" Width="1.5" />
+    <Position X="3.75" Y="1" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAgAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Common\NamedEntityData.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="VL1.Data.Common.UniqueEntityData">
-    <Position X="4.75" Y="3.25" Width="1.5" />
+    <Position X="6.25" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Common\UniqueEntityData.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="VL1.Data.Common.PeriodData">
-    <Position X="7.25" Y="1" Width="1.5" />
+    <Position X="9.25" Y="1" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAACAAAAAAAAA=</HashCode>
       <FileName>Common\PeriodData.cs</FileName>
@@ -57,7 +57,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="VL1.Data.Quantity.UnitFactorData" Collapsed="true">
-    <Position X="6.5" Y="3.5" Width="1.5" />
+    <Position X="9.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAAACAAAAAAEAAAAAAA=</HashCode>
       <FileName>Quantity\UnitFactorData.cs</FileName>
