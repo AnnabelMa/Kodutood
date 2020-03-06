@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using NHibernate.Linq;
 using VL1.Data.Common;
 using VL1.Domain.Common;
 
