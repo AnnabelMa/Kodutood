@@ -13,7 +13,6 @@ namespace VL1.Infra
         where TDomain : Entity<TData>, new()
     {
         protected internal DbContext db;
-
         protected internal DbSet<TData> dbSet;
 
         protected BaseRepository(DbContext c, DbSet<TData> s)

@@ -31,25 +31,13 @@ namespace VL1.Infra
             return (int)Math.Ceiling(count / (double)pageSize);
         }
 
-        internal  int getItemsCount()
-        {
-            var query = base.createSqlQuery();
-            return query.CountAsync().Result;//resulti abil saab asünkroonset meetodit kutsuda välja sünkroonses meetodis
-        }
+        internal  int getItemsCount() => base.createSqlQuery().CountAsync().Result;
+        //resulti abil saab asünkroonset meetodit kutsuda välja sünkroonses meetodis
 
-        protected internal override IQueryable<TData> createSqlQuery()
-        {
-            var query = base.createSqlQuery();
-            query = addSkipAndTake(query);
-            return query;
-        }
+        protected internal override IQueryable<TData> createSqlQuery() =>  addSkipAndTake(base.createSqlQuery());
 
-        private IQueryable<TData> addSkipAndTake(IQueryable<TData> query)
-        {
-            var q = query.Skip(
-                    (PageIndex - 1) * PageSize)
+        private IQueryable<TData> addSkipAndTake(IQueryable<TData> query) => query
+            .Skip((PageIndex - 1) * PageSize)
                 .Take(PageSize);
-            return q;
-        }
     }
 } 

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using VL1.Data.Common;
 using VL1.Domain.Common;
@@ -22,7 +19,6 @@ namespace VL1.Infra
             query = addFiltering(query);
             return query;
         }
-
         protected internal virtual IQueryable<TData> addFiltering(IQueryable<TData> query)
         {
             return query;

@@ -22,7 +22,6 @@ namespace VL1.Infra
             query = addSorting(query);
             return query;
         }
-
         //kirjutab lause, milles on SQL sorteerimine sees:
         protected internal IQueryable<TData> addSorting(IQueryable<TData> query)
         {
@@ -70,7 +69,6 @@ namespace VL1.Infra
             try { return isDescending() ? query.OrderByDescending(e) : query.OrderBy(e); }
             catch { return query;}
         }
-
         internal bool isDescending() => !string.IsNullOrEmpty(SortOrder) && SortOrder.EndsWith(DescendingString);
     }
 }
