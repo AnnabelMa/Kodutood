@@ -18,10 +18,10 @@ namespace VL1.Infra
         protected internal override IQueryable<TData> createSqlQuery()
         {
             var query= base.createSqlQuery();
-            query = addFiltering(query);
+            query = AddFiltering(query);
             return query;
         }
-        internal IQueryable<TData> addFiltering(IQueryable<TData> query)
+        internal IQueryable<TData> AddFiltering(IQueryable<TData> query)
         {
             if (string.IsNullOrEmpty(SearchString)) return query;
             var expression = CreateWhereExpression();
