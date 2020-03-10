@@ -51,13 +51,11 @@ namespace VL1.Soft.Areas.Quantity.Pages.Measures
         public string DefinitionSort { get; set; }
         public string ValidToSort { get; set; }
 
-
         public bool HasPreviousPage { get; set; }
         public bool HasNextPage { get; set; }
         public int PageIndex { get; set; }
 
         public string CurrentFilter { get; set; }
         public string SearchString { get; set; }
-
     }
 }
