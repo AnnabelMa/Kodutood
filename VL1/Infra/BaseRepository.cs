@@ -21,7 +21,7 @@ namespace VL1.Infra
         }
         public virtual async Task<List<TDomain>> Get()
         {
-            var query = createSqlQuery();//teen Sgl query
+            var query = createSqlQuery();//teen Sql query
             var set = await runSqlQueryAsync(query);//küsin andmebaasist andmeid vastavalt queryle, mis tegin
 
             return toDomainObjectsList(set);//andmebaasists saadud listi teisendan vajalikuks listiks
@@ -75,9 +75,7 @@ namespace VL1.Infra
             db.Attach(obj.Data).State = EntityState.Modified;
 
             try{ await db.SaveChangesAsync();}
-            catch (DbUpdateConcurrencyException)
-            {
-            }
+            catch (DbUpdateConcurrencyException) { }
         }
     }
 }

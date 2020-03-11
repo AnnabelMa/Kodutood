@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Xrm.Sdk.Extensions;
 using VL1.Infra.Quantity;
 
 namespace VL1.Soft
