@@ -1,13 +1,12 @@
-﻿
-using VL1.Domain.Quantity;
+﻿using VL1.Domain.Quantity;
 
 namespace VL1.Facade.Quantity
 {
-    public static class MeasureViewFactory
+    public static  class UnitViewFactory
     {
-        public static Measure Create(MeasureView v) //v-view
+        public static Unit Create(UnitView v) //v-view
         {
-            var o = new Measure()
+            var o = new Unit()
             {
                 Data = {
                     Id = v.Id,
@@ -20,9 +19,9 @@ namespace VL1.Facade.Quantity
             };
             return o;
         }
-        public static MeasureView Create(Measure o) //o-object
+        public static UnitView Create(Unit o) //o-object
         {
-            var v = new MeasureView
+            var v = new UnitView
             {
                 Id = o.Data.Id,
                 Name = o.Data.Name,

@@ -32,6 +32,7 @@ namespace VL1.Soft
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false) //muudetud fasle-iks, et saaks sisse logida
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddScoped<IMeasuresRepository, MeasuresRepository>();
+            services.AddScoped<IUnitsRepository, UnitsRepository>();
             services.AddRazorPages();
         }
 

@@ -39,7 +39,6 @@ namespace VL1.Infra
             var query = from s in dbSet select s;
             return query;
         }
-
         public async Task<TDomain> Get(string id)
         {
             if (id is null) return new TDomain();
