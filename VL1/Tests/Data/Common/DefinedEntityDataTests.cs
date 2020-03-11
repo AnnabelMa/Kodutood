@@ -4,7 +4,7 @@ using VL1.Data.Common;
 namespace VL1.Tests.Data.Common
 {
     [TestClass]
-    public class DefinedDataTest : AbstractClassTest<DefinedEntityData, NamedEntityData>
+    public class DefinedEntityDataTests : AbstractClassTest<DefinedEntityData, NamedEntityData>
     {
         private class testClass: DefinedEntityData { }
 
@@ -17,7 +17,7 @@ namespace VL1.Tests.Data.Common
         [TestMethod]
         public void DefinitionTest()
         {
-            isNullableProperty(() => obj.Definition, x => obj.Definition =x);
+            IsNullableProperty(() => obj.Definition, x => obj.Definition =x);
         }
     }
 }

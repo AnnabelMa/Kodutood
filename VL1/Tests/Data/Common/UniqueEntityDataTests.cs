@@ -17,7 +17,7 @@ namespace VL1.Tests.Data.Common
         [TestMethod]
         public void IdTest()
         {
-            isNullableProperty(() => obj.Id, x => obj.Id = x);
+            IsNullableProperty(() => obj.Id, x => obj.Id = x);
         }
     }
 }

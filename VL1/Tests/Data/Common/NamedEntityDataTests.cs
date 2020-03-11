@@ -17,12 +17,12 @@ namespace VL1.Tests.Data.Common
         [TestMethod]
         public void NameTest()
         {
-            isNullableProperty(() => obj.Name, x => obj.Name = x);
+            IsNullableProperty(() => obj.Name, x => obj.Name = x);
         }
         [TestMethod]
         public void CodeTest()
         {
-            isNullableProperty(() => obj.Code, x => obj.Code = x);
+            IsNullableProperty(() => obj.Code, x => obj.Code = x);
         }
     }
 }

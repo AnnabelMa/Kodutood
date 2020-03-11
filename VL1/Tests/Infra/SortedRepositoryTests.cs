@@ -3,7 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
-using Abc.Aids;
+using VL1.Aids;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VL1.Data.Quantity;
@@ -43,7 +43,7 @@ namespace VL1.Tests.Infra
         [TestMethod]
         public void SortOrderTest()
         { 
-            isNullableProperty(()=>obj.SortOrder, x=> obj.SortOrder=x);
+            IsNullableProperty(()=>obj.SortOrder, x=> obj.SortOrder=x);
         }
 
         [TestMethod]
