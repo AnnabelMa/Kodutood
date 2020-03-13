@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Microsoft.EntityFrameworkCore;
 using VL1.Data.Common;
 using VL1.Domain.Common;
@@ -36,8 +37,12 @@ namespace VL1.Infra
 
         protected internal override IQueryable<TData> createSqlQuery() =>  addSkipAndTake(base.createSqlQuery());
 
-        private IQueryable<TData> addSkipAndTake(IQueryable<TData> query) => query
-            .Skip((PageIndex - 1) * PageSize)
+        private IQueryable<TData> addSkipAndTake(IQueryable<TData> query)
+        {
+            if (PageIndex < 1) return query;
+            return query
+                .Skip((PageIndex - 1) * PageSize)
                 .Take(PageSize);
+        }
     }
 } 

@@ -9,7 +9,7 @@
     <body>
 
         @Html.EditControlsFor(x => x.Item.Id)
-        @Html.EditControlsFor(x => x.Item.MeasureId)
+        @Html.EditControlsForDropDown(x => x.Item.MeasureId, Model.Measures)
         @Html.EditControlsFor(x => x.Item.Code)
         @Html.EditControlsFor(x => x.Item.Name)
         @Html.EditControlsFor(x => x.Item.Definition)
