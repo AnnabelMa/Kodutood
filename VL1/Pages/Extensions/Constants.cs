@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace VL1.Pages.Extensions
+﻿namespace VL1.Pages.Extensions
 {
     public static class Constants
     {

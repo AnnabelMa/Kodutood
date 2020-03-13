@@ -11,6 +11,7 @@ namespace VL1.Facade.Quantity
                 Data = {
                     Id = v.Id,
                     Name = v.Name,
+                    MeasureId = v.MeasureId,
                     Code = v.Code,
                     Definition = v.Definition,
                     ValidFrom = v.ValidFrom,
@@ -25,6 +26,7 @@ namespace VL1.Facade.Quantity
             {
                 Id = o.Data.Id,
                 Name = o.Data.Name,
+                MeasureId = o.Data.MeasureId,
                 Code = o.Data.Code,
                 Definition = o.Data.Definition,
                 ValidFrom = o.Data.ValidFrom,

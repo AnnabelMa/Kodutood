@@ -5,7 +5,7 @@ using VL1.Data.Quantity;
 namespace VL1.Tests.Data.Quantity
 {
     [TestClass]
-    public class UnitFactorDataTest : SealedClassTest<UnitFactorData, PeriodData>
+    public class UnitFactorDataTest : SealedClassTests<UnitFactorData, PeriodData>
     {
         [TestMethod]
         public void FactorTest()

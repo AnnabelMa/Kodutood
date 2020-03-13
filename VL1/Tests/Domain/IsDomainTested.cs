@@ -9,10 +9,10 @@ namespace VL1.Tests.Domain
 
         protected override string Namespace(string name)
         {
-            return $"(assembly).{name}";
+            return $"{assembly}.{name}";
         }
-        [TestMethod] public void IsCommonTested() { isAllTested(assembly, Namespace("Common")); }
-        [TestMethod] public void IsQuantityTested() { isAllTested(assembly, Namespace("Quantity")); }
-        [TestMethod] public void IsTested() { isAllTested(base.Namespace("Domain"));}
+        [TestMethod] public void IsCommonTested() { IsAllTested(assembly, Namespace("Common")); }
+        [TestMethod] public void IsQuantityTested() { IsAllTested(assembly, Namespace("Quantity")); }
+        [TestMethod] public void IsTested() { IsAllTested(base.Namespace("Domain"));}
     }
 }

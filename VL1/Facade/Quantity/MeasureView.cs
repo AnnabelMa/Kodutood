@@ -2,7 +2,7 @@
 
 namespace VL1.Facade.Quantity
 {
-    public class MeasureView: DefinedView
+    public sealed class MeasureView: DefinedView
     {
     }
 }

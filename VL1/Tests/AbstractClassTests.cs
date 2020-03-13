@@ -2,7 +2,7 @@
 
 namespace VL1.Tests
 {
-    public abstract class AbstractClassTest<TClass, TBaseClass> : BaseTest<TClass, TBaseClass>
+    public abstract class AbstractClassTests<TClass, TBaseClass> : BaseClassTests<TClass, TBaseClass>
         //siia ei pane where lauset abstract klassi luua ei saa
     {
         [TestMethod]

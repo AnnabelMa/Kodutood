@@ -3,7 +3,7 @@
 namespace VL1.Tests
 {
     //where- lausest edasi: peab olema konstruktor, kus pole argumente
-    public abstract class SealedClassTest<TClass, TBaseClass> : ClassTest<TClass, TBaseClass> where TClass: new()
+    public abstract class SealedClassTests<TClass, TBaseClass> : ClassTests<TClass, TBaseClass> where TClass: new()
     {
         [TestMethod]
         public void IsSealed()

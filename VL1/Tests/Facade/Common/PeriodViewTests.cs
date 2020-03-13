@@ -1,12 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using VL1.Data.Common;
+using VL1.Facade.Common;
 
-namespace VL1.Tests.Data.Common
+namespace VL1.Tests.Facade.Common
 {
     [TestClass]
-    public class PeriodDataTests : AbstractClassTests<PeriodData, object>
+    public class PeriodViewTests : AbstractClassTests<PeriodView, object>
     {
-        private class testClass : PeriodData { }
+        private class testClass : PeriodView { }
 
         [TestInitialize]
         public override void TestInitialize()

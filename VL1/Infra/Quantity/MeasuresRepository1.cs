@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using VL1.Domain.Quantity;
-using System.Linq;
+﻿using VL1.Domain.Quantity;
 using VL1.Data.Quantity;
 
 namespace VL1.Infra.Quantity

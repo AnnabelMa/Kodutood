@@ -2,7 +2,7 @@
 
 namespace VL1.Data.Money
 {
-    public sealed class CurrencyDatacs : DefinedEntityData
+    public sealed class CurrencyData : DefinedEntityData
     {
     }
 }

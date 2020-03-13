@@ -1,12 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using VL1.Data.Common;
+using VL1.Facade.Common;
 
-namespace VL1.Tests.Data.Common
+namespace VL1.Tests.Facade.Common
 {
     [TestClass]
-    public class NamedEntityDataTests : AbstractClassTests<NamedEntityData, UniqueEntityData>
+    public class NamedViewTests : AbstractClassTests<NamedView, UniqueEntityView>
     {
-        private class testClass : NamedEntityData { }
+        private class testClass : NamedView { }
 
         [TestInitialize]
         public override void TestInitialize()

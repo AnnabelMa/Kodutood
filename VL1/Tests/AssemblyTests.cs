@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using VL1.Aids;
+using Abc.Aids;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace VL1.Tests
@@ -33,35 +33,35 @@ namespace VL1.Tests
             return $"{assembly}.{name}";
         }
 
-        protected void isAllTested(string assemblyName,
+        protected void IsAllTested(string assemblyName,
             string namespaceName = null)
         {
-            var l = getAssemblyClasses(assemblyName);
-            removeInterfaces(l);
-            list = toClassNamesList(l);
-            removeNotInNamespace(namespaceName);
-            removeSurrogateClasses();
-            removeTested();
+            var l = GetAssemblyClasses(assemblyName);
+            RemoveInterfaces(l);
+            list = ToClassNamesList(l);
+            RemoveNotInNamespace(namespaceName);
+            RemoveSurrogateClasses();
+            RemoveTested();
 
             if (list.Count == 0) return;
 
-            report(isNotTested, list[0]);
+            Report(isNotTested, list[0]);
         }
 
-        private static void report(string message, params object[] parameters)
+        private static void Report(string message, params object[] parameters)
         {
             Assert.Fail(message, parameters);
         }
 
-        private static List<Type> getAssemblyClasses(string assemblyName)
+        private static List<Type> GetAssemblyClasses(string assemblyName)
         {
             var l = GetSolution.TypesForAssembly(assemblyName);
-            if (l.Count == 0) report(noClassesInAssembly, assemblyName);
+            if (l.Count == 0) Report(noClassesInAssembly, assemblyName);
 
             return l;
         }
 
-        private static void removeInterfaces(IList<Type> types)
+        private static void RemoveInterfaces(IList<Type> types)
         {
             for (var i = types.Count; i > 0; i--)
             {
@@ -73,12 +73,12 @@ namespace VL1.Tests
             }
         }
 
-        private static List<string> toClassNamesList(List<Type> l)
+        private static List<string> ToClassNamesList(List<Type> l)
         {
             return l.Select(o => o.FullName).ToList();
         }
 
-        private void removeNotInNamespace(string namespaceName)
+        private void RemoveNotInNamespace(string namespaceName)
         {
             if (string.IsNullOrEmpty(namespaceName)) return;
 
@@ -86,10 +86,10 @@ namespace VL1.Tests
 
             if (list.Count > 0) return;
 
-            report(noClassesInNamespace, namespaceName);
+            Report(noClassesInNamespace, namespaceName);
         }
 
-        private void removeSurrogateClasses()
+        private void RemoveSurrogateClasses()
         {
             list.RemoveAll(o => o.Contains(shell32));
             list.RemoveAll(o => o.Contains(internalClass));
@@ -99,9 +99,9 @@ namespace VL1.Tests
             list.RemoveAll(o => o.Contains("Migrations"));
         }
 
-        private void removeTested()
+        private void RemoveTested()
         {
-            var tests = getTestClasses();
+            var tests = GetTestClasses();
 
             for (var i = list.Count; i > 0; i--)
             {
@@ -115,7 +115,7 @@ namespace VL1.Tests
             }
         }
 
-        private List<string> getTestClasses()
+        private List<string> GetTestClasses()
         {
             var l = new List<string>();
             var tests = GetSolution.TypeNamesForAssembly(testAssembly);

@@ -5,7 +5,7 @@ using VL1.Data.Quantity;
 namespace VL1.Tests.Data.Quantity
 {
     [TestClass]
-    public class UnitDataTests : SealedClassTest<UnitData, DefinedEntityData>
+    public class UnitDataTests : SealedClassTests<UnitData, DefinedEntityData>
     {
         [TestMethod]
         public void MeasureIdTest()

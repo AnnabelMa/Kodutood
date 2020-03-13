@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using VL1.Aids;
+using Abc.Aids;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using VL1.Data.Quantity;
 using VL1.Domain.Common;
 
 namespace VL1.Pages

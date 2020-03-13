@@ -44,7 +44,7 @@ namespace VL1.Infra
             //3)property on selline, aga konventeeri property tüübiks
             //ja body on see mida hakkan kasutama
             //4) kogu body pane käituma nagu lambdaExpression
-            var param = Expression.Parameter(typeof(TData));
+            var param = Expression.Parameter(typeof(TData), "x");
             var property = Expression.Property(param, p);
             var body = Expression.Convert(property, typeof(object));
             return Expression.Lambda<Func<TData, object>>(body, param);
