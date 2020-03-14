@@ -11,12 +11,19 @@ namespace VL1.Pages.Extensions
         public static IHtmlContent DisplayControlsFor<TModel, TResult>(this IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, TResult>> expression)
         {
-            var s = htmlStrings(htmlHelper, expression);
+            var s = HtmlStrings(htmlHelper, expression);
+
+            return new HtmlContentBuilder(s);
+        }
+        public static IHtmlContent DisplayControlsFor<TModel, TResult>(this IHtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, TResult>> expression, string value)
+        {
+            var s = HtmlStrings(htmlHelper, expression, value);
 
             return new HtmlContentBuilder(s);
         }
 
-        internal static List<object> htmlStrings<TModel, TResult>(IHtmlHelper<TModel> htmlHelper,
+        internal static List<object> HtmlStrings<TModel, TResult>(IHtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, TResult>> expression)
         {
             return new List<object> {
@@ -28,18 +35,16 @@ namespace VL1.Pages.Extensions
                 new HtmlString("</dd>")
             };
         }
-
-        //private static List<object> htmlStrings<TModel, TResult>(IHtmlHelper<TModel> htmlHelper,
-        //    Expression<Func<TModel, TResult>> expression, string value)
-        //{
-        //    return new List<object> {
-        //        new HtmlString("<dt class=\"col-sm-2\">"),
-        //        htmlHelper.DisplayNameFor(expression),
-        //        new HtmlString("</dt>"),
-        //        new HtmlString("<dd class=\"col-sm-10\">"),
-        //        htmlHelper.Raw(value),
-        //        new HtmlString("</dd>")
-        //    };
-        //}
+        private static List<object> HtmlStrings<TModel, TResult>(IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TResult>> expression, string value)
+        {
+            return new List<object> {
+                new HtmlString("<dt class=\"col-sm-2\">"),
+                htmlHelper.DisplayNameFor(expression),
+                new HtmlString("</dt>"),
+                new HtmlString("<dd class=\"col-sm-10\">"),
+                htmlHelper.Raw(value),
+                new HtmlString("</dd>")
+            };
+        }
     }
 }
