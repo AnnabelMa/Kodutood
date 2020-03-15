@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Abc.Aids;
@@ -10,9 +11,9 @@ using VL1.Domain.Common;
 namespace VL1.Pages
 {
    public abstract class BasePage<TRepository, TDomain, TView, TData> : PageModel
-   where TRepository: ICrudMethods<TDomain>, ISorting, ISearching, IPaging
+   where TRepository: ICrudMethods<TDomain>, ISorting, IFiltering, IPaging
     {
-        private TRepository db;
+        private readonly TRepository db;
 
         protected internal BasePage(TRepository r)
         { 
@@ -26,11 +27,35 @@ namespace VL1.Pages
         public abstract string ItemId { get; }
 
         public string PageTitle { get; set; }
-        public string PageSubtitle { get; set; }
-        public string CurrentSort { get; set; }
+        public string PageSubtitle => getPageSubtitle();
 
-        public string CurrentFilter { get; set; }
-        public string SearchString { get; set; }
+        protected internal virtual string getPageSubtitle()
+        {
+            return string.Empty;
+        }
+
+        public string FixedValue
+        {
+            get => db.FixedValue; 
+            set => db.FixedValue = value;
+        }
+
+        public string FixedFilter { 
+            get => db.FixedFilter; 
+            set => db.FixedFilter =value;
+        }
+
+        public string SortOrder
+        {
+            get => db.SortOrder;
+            set => db.SortOrder = value;
+        }
+
+        public string SearchString
+        {
+            get => db.SearchString;
+            set => db.SearchString = value;
+        }
 
         public int PageIndex
         {
@@ -61,7 +86,6 @@ namespace VL1.Pages
 
         protected internal abstract TDomain ToObject(TView view);
 
-
         protected internal async Task UpdateObject()
         {
             // Todo viga tuleb lahendada
@@ -85,37 +109,36 @@ namespace VL1.Pages
         {
             var name = GetMember.Name(e);
             string sortOrder;
-            if (string.IsNullOrEmpty(CurrentSort)) sortOrder = name;
-            else if (!CurrentSort.StartsWith(name)) sortOrder = name;
-            else if (CurrentSort.EndsWith("_desc")) sortOrder = name;
+            if (string.IsNullOrEmpty(SortOrder)) sortOrder = name;
+            else if (!SortOrder.StartsWith(name)) sortOrder = name;
+            else if (SortOrder.EndsWith("_desc")) sortOrder = name;
             else sortOrder = name + "_desc";
 
-            return $"{page}?sortOrder={sortOrder}&currentFilter={CurrentFilter}";
+            return $"{page}?sortOrder={sortOrder}&currentFilter={SearchString}";
         }
         protected internal async Task GetList(string sortOrder, string currentFilter,
-            string searchString, int? pageIndex)
+            string searchString, int? pageIndex, string fixedFilter, string fixedValue)
         {
-            sortOrder = string.IsNullOrEmpty(sortOrder) ? "Name" : sortOrder;
-            CurrentSort = sortOrder;
-
-            if (searchString != null)
-            {
-                PageIndex = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
-            CurrentFilter = searchString;
-
-            db.SortOrder = sortOrder;
-            SearchString = CurrentFilter;
-            db.SearchString = SearchString;
-
+            FixedFilter = fixedFilter;
+            FixedValue = fixedValue;
+            SortOrder = sortOrder;
+            SearchString = GetSearchString(currentFilter, searchString, ref pageIndex);
             PageIndex = pageIndex ?? 1;
+            Items = await GetList();
+        }
+
+        private string GetSearchString(string currentFilter, string searchString, ref int? pageIndex)
+        {
+            if (searchString != null) { PageIndex = 1; }
+            else { searchString = currentFilter; }
+
+            return searchString;
+        }
+
+        internal async Task<IList<TView>> GetList()
+        {
             var l = await db.Get();
-            Items = new List<TView>();
-            foreach (var e in l) Items.Add(ToView(e));
+            return l.Select(ToView).ToList();
         }
     }
 }

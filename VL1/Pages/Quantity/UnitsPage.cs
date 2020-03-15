@@ -29,6 +29,13 @@ namespace VL1.Pages.Quantity
 
         public override string ItemId => Item.Id;
 
+        protected internal override string getPageSubtitle()
+        {
+            return FixedValue is null 
+               ? base.getPageSubtitle() 
+               : $"For {GetMeasureName(FixedValue)}";
+        }
+
         protected internal override Unit ToObject(UnitView view)
         {
             return UnitViewFactory.Create(view);
