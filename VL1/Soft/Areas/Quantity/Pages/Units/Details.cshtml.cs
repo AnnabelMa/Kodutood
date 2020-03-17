@@ -9,8 +9,10 @@ namespace VL1.Soft.Areas.Quantity.Pages.Units
     {
         public DetailsModel(IUnitsRepository r, IMeasuresRepository m) : base(r, m) { }
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(string id, string fixedFilter, string fixedValue)
         {
+            FixedFilter = fixedFilter;
+            FixedValue = fixedValue;
             await GetObject(id);
             return Page();
         }
