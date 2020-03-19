@@ -18,10 +18,8 @@ namespace VL1.Soft.Areas.Quantity.Pages.Measures
 
         public async Task<IActionResult> OnPostAsync(string fixedFilter, string fixedValue)
         {
-            FixedFilter = fixedFilter;
-            FixedValue = fixedValue;
-            if (!await AddObject()) return Page();
-            return Redirect($"/Quantity/Measures/Index?fixedFilter={FixedFilter}&fixedValue={FixedValue}");
+            if (!await AddObject(fixedFilter, fixedValue)) return Page();
+            return Redirect(IndexUrl);
         }
     }
 }

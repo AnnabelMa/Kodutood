@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Abc.Aids;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using VL1.Aids;
 using VL1.Domain.Common;
 
 namespace VL1.Pages
@@ -28,6 +28,16 @@ namespace VL1.Pages
 
         public string PageTitle { get; set; }
         public string PageSubtitle => getPageSubtitle();
+        public string IndexUrl => getIndexUrl();
+
+        protected internal string getIndexUrl()
+        {
+            return $"{PageUrl}/Index?fixedFilter={FixedFilter}&fixedValue={FixedValue}";
+        }
+
+        public string PageUrl => getPageUrl();
+
+        protected internal abstract string getPageUrl();
 
         protected internal virtual string getPageSubtitle()
         {
@@ -67,8 +77,10 @@ namespace VL1.Pages
 
         public int TotalPages => db.TotalPages;
 
-        protected internal async Task<bool> AddObject()
+        protected internal async Task<bool> AddObject(string fixedFilter, string fixedValue)
         {
+            FixedFilter = fixedFilter;
+            FixedValue = fixedValue;
             // Todo viga tuleb lahendada
             // To protect from overposting attacks, please enable the specific properties you want to bind to, for
             // more details see https://aka.ms/RazorPagesCRUD.
@@ -86,14 +98,14 @@ namespace VL1.Pages
 
         protected internal abstract TDomain ToObject(TView view);
 
-        protected internal async Task UpdateObject()
+        protected internal async Task UpdateObject(string fixedFilter, string fixedValue)
         {
             // Todo viga tuleb lahendada
             // To protect from overposting attacks, please enable the specific properties you want to bind to, for
             // more details see https://aka.ms/RazorPagesCRUD.
             await db.Update(ToObject(Item));
         }
-        protected internal async Task GetObject(string id)
+        protected internal async Task GetObject(string id, string fixedFilter, string fixedValue)
         {
             var o = await db.Get(id);
             Item = ToView(o);
@@ -101,7 +113,7 @@ namespace VL1.Pages
 
         protected internal abstract TView ToView(TDomain obj);
 
-        protected internal async Task DeleteObject(string id)
+        protected internal async Task DeleteObject(string id, string fixedFilter, string fixedValue)
         {
             await db.Delete(id);
         }

@@ -11,11 +11,8 @@ namespace VL1.Soft.Areas.Quantity.Pages.Measures
 
         public async Task<IActionResult> OnGetAsync(string id, string fixedFilter, string fixedValue)
         {
-            FixedFilter = fixedFilter;
-            FixedValue = fixedValue;
-            await GetObject(id);
+            await GetObject(id, fixedFilter, fixedValue);
             return Page();
         }
-
     }
 }
