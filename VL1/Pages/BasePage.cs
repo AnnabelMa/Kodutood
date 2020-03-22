@@ -10,7 +10,7 @@ using VL1.Domain.Common;
 
 namespace VL1.Pages
 {
-   public abstract class BasePage<TRepository, TDomain, TView, TData> : PageModel
+    public abstract class BasePage<TRepository, TDomain, TView, TData> : PageModel
    where TRepository: ICrudMethods<TDomain>, ISorting, IFiltering, IPaging
     {
         private readonly TRepository db;
@@ -27,7 +27,7 @@ namespace VL1.Pages
         public abstract string ItemId { get; }
 
         public string PageTitle { get; set; }
-        public string PageSubtitle => getPageSubtitle();
+        public string PageSubtitle => getPageSubTitle();
         public string IndexUrl => getIndexUrl();
 
         protected internal string getIndexUrl()
@@ -39,7 +39,7 @@ namespace VL1.Pages
 
         protected internal abstract string getPageUrl();
 
-        protected internal virtual string getPageSubtitle()
+        protected internal virtual string getPageSubTitle()
         {
             return string.Empty;
         }
@@ -147,7 +147,6 @@ namespace VL1.Pages
 
             return searchString;
         }
-
         internal async Task<IList<TView>> GetList()
         {
             var l = await db.Get();
