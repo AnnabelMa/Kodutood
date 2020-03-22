@@ -38,7 +38,8 @@ namespace VL1.Pages.Extensions
                 htmlStrings.Add(new HtmlString("<thead>"));
                 htmlStrings.Add(new HtmlString("<tr>"));
 
-                foreach (var p in properties) {
+                foreach (var p in properties)
+                {
                     htmlStrings.Add(new HtmlString("<th>"));
                     htmlStrings.Add(GetMember.DisplayName(p));
                     htmlStrings.Add(new HtmlString("</th>"));

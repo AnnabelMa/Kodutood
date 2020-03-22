@@ -13,6 +13,5 @@ namespace VL1.Tests.Pages.Extensions
         {
             Assert.Inconclusive();
         }
-       
     }
 }
