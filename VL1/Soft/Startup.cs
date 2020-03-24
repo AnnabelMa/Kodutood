@@ -31,9 +31,10 @@ namespace VL1.Soft
                    Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false) //muudetud fasle-iks, et saaks sisse logida
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddRazorPages();
             services.AddScoped<IMeasuresRepository, MeasuresRepository>();
             services.AddScoped<IUnitsRepository, UnitsRepository>();
-            services.AddRazorPages();
+            services.AddServerSideBlazor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,6 +63,7 @@ namespace VL1.Soft
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapBlazorHub();
             });
         }
     }
