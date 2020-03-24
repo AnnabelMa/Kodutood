@@ -27,7 +27,7 @@ namespace VL1.Pages
         public abstract string ItemId { get; }
 
         public string PageTitle { get; set; }
-        public string PageSubtitle => getPageSubTitle();
+        public string PageSubTitle => getPageSubTitle();
         public string IndexUrl => getIndexUrl();
 
         protected internal string getIndexUrl()

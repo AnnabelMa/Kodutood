@@ -11,29 +11,33 @@ namespace VL1.Tests.Pages
     public class BasePageTests : AbstractClassTests<BasePage<IMeasuresRepository, Measure, MeasureView, MeasureData>,
         PageModel>
     {
+
         [TestInitialize]
         public override void TestInitialize()
         {
             base.TestInitialize();
-            obj = new testClass(new TestRepository());
+            obj = new testClass(new testRepository());
         }
+
 
         private class testClass : BasePage<IMeasuresRepository, Measure, MeasureView, MeasureData>
         {
-            protected internal testClass (IMeasuresRepository r = null) : base(r)=> PageTitle = "Measures";
+
+            protected internal testClass(IMeasuresRepository r) : base(r) => PageTitle = "Measures";
 
             public override string ItemId => Item?.Id ?? string.Empty;
+
             protected internal override string getPageUrl() => "/Quantity/Measures";
+
             protected internal override Measure ToObject(MeasureView view) => MeasureViewFactory.Create(view);
 
             protected internal override MeasureView ToView(Measure obj) => MeasureViewFactory.Create(obj);
+
         }
-        private class TestRepository : baseTestRepository<Measure, MeasureData>, IMeasuresRepository
-        {
-        }
+        private class testRepository : baseTestRepository<Measure, MeasureData>, IMeasuresRepository { }
 
         [TestMethod]
-        public  void CreateBasePageWithRepositoryTest()
+        public void CreateBasePageWithRepositoryTest()
         {
             Assert.Inconclusive();
         }
@@ -63,10 +67,11 @@ namespace VL1.Tests.Pages
         }
 
         [TestMethod]
-        public void GetPageSubTitleTest()
+        public void PageSubTitleTest()
         {
             Assert.Inconclusive();
         }
+
         [TestMethod]
         public void IndexUrlTest()
         {
@@ -86,18 +91,13 @@ namespace VL1.Tests.Pages
         }
 
         [TestMethod]
-        public void getPageUrlTest()
-        {
-            Assert.Inconclusive();
-        }
-        [TestMethod]
-        public void PageSubtitleTest()
+        public void GetPageUrlTest()
         {
             Assert.Inconclusive();
         }
 
         [TestMethod]
-        public void getPageSubTitleTest()
+        public void GetPageSubTitleTest()
         {
             Assert.Inconclusive();
         }
@@ -203,11 +203,13 @@ namespace VL1.Tests.Pages
         {
             Assert.Inconclusive();
         }
-
         [TestMethod]
         public void GetListNoParamsTest()
         {
             Assert.Inconclusive();
         }
+
     }
+
 }
+

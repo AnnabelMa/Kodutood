@@ -6,6 +6,7 @@ namespace VL1.Tests.Pages.Extensions
     [TestClass]
     public class TableRowForHtmlExtensionTests : BaseTests
     {
+
         [TestInitialize] public virtual void TestInitialize() => type = typeof(TableRowForHtmlExtension);
 
         [TestMethod]
@@ -13,5 +14,6 @@ namespace VL1.Tests.Pages.Extensions
         {
             Assert.Inconclusive();
         }
+
     }
 }
