@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Aids\Aids\Aids.csproj" />
+    <ProjectReference Include="..\..\..\..\..\..\Documents\Aids\Aids.csproj" />
     <ProjectReference Include="..\Facade\Facade.csproj" />
     <ProjectReference Include="..\Infra\Infra.csproj" />
   </ItemGroup>
