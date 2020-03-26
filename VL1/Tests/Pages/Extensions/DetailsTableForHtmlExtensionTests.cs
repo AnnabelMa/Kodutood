@@ -4,7 +4,7 @@ using VL1.Pages.Extensions;
 namespace VL1.Tests.Pages.Extensions
 {
     [TestClass]
-    public class DetailsTableForHtmlExtensionsTests: BaseTests
+    public class DetailsTableForHtmlExtensionTests: BaseTests
     {
         [TestInitialize]
         public virtual void TestInitialize() => type = typeof(DetailsTableForHtmlExtension);

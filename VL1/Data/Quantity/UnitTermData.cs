@@ -4,7 +4,7 @@ using System.Text;
 
 namespace VL1.Data.Quantity
 {
-    public class UnitTerm: CommonTerm
+    public class UnitTermData: CommonTermData
     {
     }
 }
