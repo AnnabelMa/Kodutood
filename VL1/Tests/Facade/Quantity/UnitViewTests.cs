@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VL1.Facade.Common;
 using VL1.Facade.Quantity;
 

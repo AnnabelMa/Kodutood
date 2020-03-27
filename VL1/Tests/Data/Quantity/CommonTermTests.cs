@@ -5,10 +5,11 @@ using VL1.Data.Quantity;
 namespace VL1.Tests.Data.Quantity
 {
     [TestClass]
-    public class CommonTermTests: AbstractClassTests<CommonTermData, PeriodData>
+    public class CommonTermDataTests: AbstractClassTests<CommonTermData, PeriodData>
     {
         private class testClass: CommonTermData { }
 
+        [TestInitialize]
         public override void TestInitialize()
         {
             base.TestInitialize();
@@ -20,10 +21,17 @@ namespace VL1.Tests.Data.Quantity
             IsNullableProperty(() => obj.MasterId, x=> obj.MasterId=x);
         }
 
-        //[TestMethod]
-        //public void TermIdTest()
-        //{
-        //    IsNullableProperty(() => obj.TermId, x => obj.TermId = x);
-        //}
+        [TestMethod]
+        public void TermIdTest()
+        {
+            IsNullableProperty(() => obj.TermId, x => obj.TermId = x);
+        }
+
+        [TestMethod]
+        public void PowerTest()
+        {
+            IsProperty(() => obj.Power, x => obj.Power = x);
+        }
     }
 }
+  

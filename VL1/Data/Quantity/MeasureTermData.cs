@@ -1,7 +1,6 @@
-﻿
-namespace VL1.Data.Quantity
+﻿namespace VL1.Data.Quantity
 {
-    public class MeasureTermData: CommonTermData
+    public sealed class MeasureTermData: CommonTermData
     {
     }
 }
