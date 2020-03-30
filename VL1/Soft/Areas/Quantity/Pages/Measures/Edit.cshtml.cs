@@ -19,7 +19,6 @@ namespace VL1.Soft.Areas.Quantity.Pages.Measures
         {
             await UpdateObject(fixedFilter, fixedValue);
             return Redirect(IndexUrl);
-
         }
     }
 }
