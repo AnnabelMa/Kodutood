@@ -6,7 +6,6 @@ using VL1.Aids;
 
 namespace VL1.Tests
 {
-
     public class AssemblyTests
     {
         private static string isNotTested => "<{0}> is not tested";
