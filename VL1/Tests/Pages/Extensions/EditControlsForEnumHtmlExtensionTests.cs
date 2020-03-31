@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using VL1.Facade.Common;
-using VL1.Pages.Extensions;
-using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using VL1.Pages.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace VL1.Tests.Pages.Extensions

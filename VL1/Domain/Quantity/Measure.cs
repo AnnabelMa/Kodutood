@@ -7,8 +7,6 @@ namespace VL1.Domain.Quantity
     //ülesanne on vedada andmeid andmebaasi ja kasutajaliidese "kihi" vahel
     {
         public Measure() : this(null) { }
-        //private MeasureData d;
         public Measure(MeasureData data) : base(data) { }
-
     }
 }
