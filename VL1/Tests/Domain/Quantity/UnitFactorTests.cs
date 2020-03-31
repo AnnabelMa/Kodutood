@@ -6,7 +6,7 @@ using VL1.Domain.Quantity;
 namespace VL1.Tests.Domain.Quantity
 {
     [TestClass]
-    public class MeasureTermTests: SealedClassTests<MeasureTerm, Entity<MeasureTermData>>
+    public class UnitFactorTests : SealedClassTests<UnitFactor, Entity<UnitFactorData>>
     {
     }
 }
